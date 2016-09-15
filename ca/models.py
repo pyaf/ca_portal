@@ -29,7 +29,6 @@ class CAProfile(models.Model):
     mobile_number = models.BigIntegerField(null=True)
     whatsapp_number = models.BigIntegerField(null=True)
     college = models.ForeignKey(College,null = True)
-    college_address = models.TextField(null=True)
     postal_address = models.TextField(null=True)
     profile_photo = models.TextField(validators=[URLValidator()],blank=True)
     whyChooseYou = models.TextField(blank=True,null=True)

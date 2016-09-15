@@ -52,7 +52,6 @@ class UserAdmin(UserAdmin):
 #Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.unregister(Group)
-
 admin.site.register(CAProfile)
 admin.site.register(User,UserAdmin)
 
