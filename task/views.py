@@ -198,6 +198,6 @@ def fbConnect(request):
             response['status'] = 'connected'
         fb_connect.save()
         taskInstance = TaskInstance.objects.get(task__taskName = 'facebook connect', ca = request.user.caprofile)
-        taskInstance.status = 10
+        taskInstance.status = 100
         taskInstance.save()
         return JsonResponse(response)

@@ -112,23 +112,129 @@
 
       <div class="col-md-6 dial" id="1">
         <form id="1">
-
-         {{ddform.as_p}}
-       <button type="submit" value="directorDetail" id="/task/submitDirector/">Submit</button>
+        {{dd_description}}
+        <br> <br>
+          {% for field in ddform %}
+              {% if field.errors %}
+                  <div class="control-group error">
+                      <label class="control-label">{{ field.label }}</label>
+                      <div class="form-control">
+                        {{ field }}
+                          <span class="help-inline">
+                              {% for error in  field.errors %}{{ error }}{% endfor %}
+                          </span>
+                      </div>
+                  </div>
+              {% else %}
+                  <div class="form-group">
+                      <label class="control-label">{{ field.label }}</label>
+                      <div class="controls">{{ field }}
+                          {% if field.help_text %}
+                              <p class="help-inline"><small>{{ field.help_text }}</small></p>
+                          {% endif %}
+                      </div>
+                  </div>
+              {% endif %}
+          {% endfor %}
+       <button type="submit" class="btn btn-default"value="directorDetail" id="/submitDirector/">Submit</button>
        </form>
       </div>
       <div class="col-md-6 dial" id="2">
         <form id="2">
-        {{sbdform.as_p}}
-         <button type="submit" value="studentBodyDetail" id="/task/submitStudentBody/">Submit</button>
-</form>
+          {{sbd_description}}
+          <br> <br>
+          {% for field in sbdform %}
 
-      </div>
+              {% if field.errors %}
+                  <div class="control-group error">
+                      <label class="control-label">{{ field.label }}</label>
+                      <div class="form-control">
+                        {{ field }}
+                          <span class="help-inline">
+                              {% for error in  field.errors %}{{ error }}{% endfor %}
+                          </span>
+                      </div>
+                  </div>
+              {% else %}
+                  <div class="form-group">
+                      <label class="control-label">{{ field.label }}</label>
+                      <div class="controls">{{ field }}
+                          {% if field.help_text %}
+                              <p class="help-inline"><small>{{ field.help_text }}</small></p>
+                          {% endif %}
+                      </div>
+                  </div>
+              {% endif %}
+          {% endfor %}
+          {{fb_description}}
+          <br> <br>
+         <button type="submit" class=" btn btn-default" value="studentBodyDetail" id="/submitStudentBody/">Submit</button>
+</form>
+</div>
+        <div class="col-md-6">
+          <button onclick="fb_login()">Login with Facebook</button>
+        </div>
 
        </div>
       </div>
     </div>
 <script>
+function theAjax(uri,data){
+ return $.ajax({
+    type:"POST",
+    dataType:"json",
+    url: uri,
+    data : data
+ });
+}
+
+window.fbAsyncInit = function () {
+    FB.init({
+        appId: '461359507257085',
+        cookie: false,  // enable cookies to allow the server to access
+        // the session
+        xfbml: true,  // parse social plugins on this page
+        version: 'v2.0' // use version 2.0
+    });
+};
+
+// Load the SDK asynchronously
+(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+
+function fb_login() {
+    FB.login(function (response) {
+
+        if (response.authResponse) {
+            //console.log('Welcome!  Fetching your information.... ');
+            //console.log(response); // dump complete info
+            access_token = response.authResponse.accessToken; //get access token
+            user_id = response.authResponse.userID; //get FB UID
+            console.log(access_token);
+            data = {}
+            data['accessToken'] = response.authResponse.accessToken;
+    data['uid'] = response.authResponse.userID;
+    theAjax('/fbConnect/',data).done(function(response){
+      console.log(response);
+      location.reload();
+    });
+
+        } else {
+            //user hit cancel button
+            console.log('User cancelled login or did not fully authorize.');
+
+        }
+    }, {
+        scope: 'email,publish_actions,public_profile'
+    });
+}
+
 $(document).ready(function(){
   var bitch = $("#id_directorDetail").html();
   console.log(bitch);
@@ -145,16 +251,12 @@ $("form button").click(function(event){
   data = {}
   data[$(this).val()] = detail
   console.log(detail);
-  theAjax(url,data);
+  theAjax(url,data).done(function(){
+
+    location.reload();
+  })
 });
-function theAjax(uri,data){
- return $.ajax({
-    type:"POST",
-    dataType:"json",
-    url: uri,
-    data : data
- });
-}
+
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
