@@ -63,16 +63,28 @@ def context_call(request):
     # print context['tasks']
     return context
 
-def LoginView(request):
-    template_name = 'ca/login.html'
-    context = {}
-    return render(request,template_name,context)
-
-
 class IndexView(generic.View):
     def get(self, request):
         template_name = 'ca/index.html'
         return render(request, template_name, {})
+
+
+def LoginView(request):
+    template_name = 'ca/login.html'
+    if request.method == "POST":
+        post = request.POST
+        email = post['email']
+        password = post['password']
+        user = authenticate(username=email, email=email, password=password)
+        if user is not None:
+            login(request,user)
+            return redirect('/ca/dashboard')
+        else:
+            messages.error(request,'Invalid Credentials',fail_silently=True)
+            return render(request,template_name,{})
+    else:
+        return render(request,template_name,{})
+
 
 def CARegistrationView(request):
     template_name = 'ca/register.html'
