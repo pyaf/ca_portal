@@ -6,7 +6,7 @@ application = get_wsgi_application()
 # import django
 # django.setup()
 import csv
-from TechnexUser.models import College
+from ca.models import College
 
 with open('b.csv','rb') as f:
     data = csv.reader(f)
