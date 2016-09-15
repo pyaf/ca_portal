@@ -10,6 +10,9 @@ urlpatterns = [
 	#first page : index page
 	url(r'^$', IndexView.as_view(), name= 'index'),
 
+	url(r'^login/$', LoginView, name= 'login' ),
+
+
 	url(r'^register/$', CARegistrationView, name= 'register' ),
 
 	#profile_registration

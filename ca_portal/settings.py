@@ -19,7 +19,6 @@ DEBUG = True
 
 INSTALLED_APPS = [
     'ca',
-    'TechnexUser',
     'task',
     'allauth',
     'allauth.socialaccount',

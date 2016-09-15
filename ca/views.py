@@ -19,7 +19,6 @@ from ca.forms import *
 from ca.models import *
 from task.models import *
 from task.forms import *
-from TechnexUser.models import *
 
 def context_call(request):
     # college = request.user.caprofile.college
@@ -64,6 +63,10 @@ def context_call(request):
     # print context['tasks']
     return context
 
+def LoginView(request):
+    template_name = 'ca/login.html'
+    context = {}
+    return render(request,template_name,context)
 
 @login_required(login_url = "/login")
 def notificationsView(request):
@@ -99,7 +102,7 @@ class IndexView(generic.View):
         return render(request, template_name, {})
 
 def CARegistrationView(request):
-    template_name = 'ca/login2.html'
+    template_name = 'ca/register.html'
     context = {
             'all_colleges':College.objects.all(),
     }

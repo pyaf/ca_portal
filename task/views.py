@@ -18,7 +18,6 @@ import re
 from ca.forms import *
 from ca.models import *
 from task.models import *
-from TechnexUser.models import *
 from task.forms import *
 
 @csrf_exempt
