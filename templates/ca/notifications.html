@@ -1,0 +1,66 @@
+{% extends 'ca/loggedin_base.html' %}
+
+{%block extra_css %}
+<link rel="stylesheet" href="/static/css/own/dashboard.css" media="screen" title="no title" charset="utf-8">
+{%endblock%}
+
+{% block navbar_name %}
+<l class="navbar-brand">It's Dashboard!</l>
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+ <div class="container">
+ <div class="row">
+ <div class="col-md-3 columns">
+   <div class="panel panel-default">
+     <div class="panel-heading"><strong>Tasks</strong></div>
+       <div class="list-group">
+        <a class="list-group-item " href="#">
+          task1
+          <span class="pull-right">
+          </span></a>
+       </div>
+     </div>
+       </div>
+                 <div class="col-md-9 columns">
+
+                   {% if messages %}
+                   {% for msg in messages %}
+                       <div class="alert alert-{{msg.level_tag}}">
+                   <a href="#" class="close" data-dismiss="alert" aria-label="close">
+                     &times;</a>
+                   {{msg.message}}
+                   </div>
+                   {% endfor %}
+                   </ul>
+                   {% endif %}
+
+                   <div class="container">
+                   <div class="col-md-5 columns">
+                       <h3>ALL Notifications:</h3>
+                         <table class="table table-hover tabel-responsive">
+                             {% for msg in all_user_msgs %}
+                                 <tr>
+                                   <td>{{msg.message}}</td>
+                                 </tr>
+                             {% endfor %}
+
+                             {% for msg in mass_msgs %}
+                              <tr>
+                               <td>
+                                 {{ msg.mass_message }}
+                               </td>
+                              </tr>
+                             {% endfor %}
+
+                     </div>
+
+         </div>
+       </div>
+     </div>
+ </div>
+
+
+{% endblock %}

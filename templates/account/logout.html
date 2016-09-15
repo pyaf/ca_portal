@@ -1,0 +1,60 @@
+{% extends 'ca/loggedin_base.html' %}
+<!-- settings page -->
+{%block extra_css %}
+<link rel="stylesheet" href="/static/css/own/dashboard.css" media="screen" title="no title" charset="utf-8">
+{%endblock%}
+
+{% block navbar_name %}
+<l class="navbar-brand">Stay Technexed!</l>
+{% endblock %}
+{% block extra_link %}
+  <li>
+      <a href="/ca/dashboard/"><i class="fa fa-th"></i> Dashboard</a>
+  </li>
+{% endblock %}
+
+{% load i18n %}
+
+{% block content %}
+
+<div class="content">
+  <div class="container">
+      <div class="row">
+        <div class="col-md-3 columns">
+          <br>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <strong>Settings</strong>
+            </div>
+            <div class="list-group">
+              <a class="list-group-item " href="{% url 'account_change_password' %}">
+                Change Password
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+        <div class="col-md-5 columns">
+
+          <h1>{% trans "Sign Out" %}</h1>
+
+          <p>{% trans 'Are you sure you want to sign out?' %}</p>
+
+          <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            <button class="btn btn-danger" type="submit">{% trans 'Sign Out' %}</button>
+          </form>
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

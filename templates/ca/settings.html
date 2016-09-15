@@ -1,0 +1,73 @@
+{% extends 'ca/loggedin_base.html' %}
+<!-- settings page -->
+{%block extra_css %}
+<link rel="stylesheet" href="/static/css/own/dashboard.css" media="screen" title="no title" charset="utf-8">
+{%endblock%}
+
+{% block navbar_name %}
+<l class="navbar-brand">Settings</l>
+{% endblock %}
+{% block extra_link %}
+  <li>
+      <a href="/ca/dashboard/"><i class="fa fa-th"></i> Dashboard</a>
+  </li>
+{% endblock %}
+{% block content %}
+
+<div class="content">
+  <div class="container">
+      <div class="row">
+        <div class="col-md-3 columns">
+          <br>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <strong>Settings</strong>
+            </div>
+            <div class="list-group">
+              <a class="list-group-item " href="{% url 'account_change_password' %}">
+                Change Password
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+        <div class="col-md-5 columns">
+            <h3>Account Details:</h3>
+              <table class="table table-hover tabel-responsive">
+                  <tr>
+                    <td>Name :</td>
+                    <td>{{request.user.first_name}} {{request.user.last_name}}</td>
+                  </tr>
+                  <tr>
+                    <td>Year :</td>
+                    <td>{{caprofile.year}}</td>
+                  </tr>
+                  <tr>
+                    <td>College :</td>
+                    <td>{{caprofile.college}}</td>
+                  </tr>
+                  <tr>
+                    <td>Mobile Number :</td>
+                    <td>{{caprofile.mobile_number}}</td>
+                  </tr>
+                  <tr>
+                    <td>WhatsApp Number :</td>
+                    <td>{{caprofile.whatsapp_number}}</td>
+                  </tr>
+                  <tr>
+                    <td>College Address :</td>
+                    <td>{{caprofile.college_address}}</td>
+                  </tr>
+                  <tr>
+                    <td>Postal Address :</td>
+                    <td>{{caprofile.postal_address}}</td>
+                  </tr>
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

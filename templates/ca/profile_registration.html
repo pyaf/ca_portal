@@ -1,0 +1,56 @@
+{% extends 'ca/loggedin_base.html' %}
+{% load widget_tweaks %}
+
+{%block extra_css %}
+<link rel="stylesheet" href="/static/css/own/dashboard.css" media="screen" title="no title" charset="utf-8">
+
+
+{% endblock %}
+{% block navbar%}
+<nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                {% block navbar_name %}
+                 <a class="navbar-brand center">Create Your Profile</a>
+                 {% endblock %}
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block content %}
+
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+
+      </div>
+      <div class="col-md-6 columns">
+        <form class="" action="" method="POST">
+          {% csrf_token %}
+
+          {% for field in form %}
+          {{  form.non_field_errors }}
+
+          <div class="form-group">
+          {{ field }}
+          {{field.errors}}
+          </div>
+          {% endfor %}
+
+          <button type="submit" class="btn btn-primary" name="button">Get Started</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script src="/static/js/jquery-1.12.4.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/base.js" charset="utf-8"></script>
+
+
+{% endblock %}

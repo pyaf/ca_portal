@@ -1,0 +1,72 @@
+{% extends 'technexuser/base.html' %}
+{% block extra_css %}
+<link rel="stylesheet" href="/static/css/jquery-ui.css" type="text/css" media="all" />
+{% endblock %}
+{%block intial_content%}
+<div class="jumbotron text-center">
+  <h1>Signup for Technex</h1>
+</div>
+
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+
+      </div>
+      <div class="col-md-6 ">
+        {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">
+          &times;</a>
+        {{msg.message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+  <br>
+        <form action="" method="post">
+          {% csrf_token %}
+          {% for field in form %}
+          {{  form.non_field_errors }}
+
+          <div class="form-group">
+          {{ field }}
+          {{field.errors}}
+          </div>
+          {% endfor %}
+          <div class="form-group">
+          <input class="form-control" name="college" type="text" id="clg"  required="true" placeholder="College"/>
+        </div>
+          <button type="submit" class="btn btn-primary">Done!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{%endblock%}
+{% block extra_js%}
+<!-- <script src="/static/js/jquery-1.12.4.min.js"></script> -->
+<script src="/static/js/1.12.0jquery-ui.min.js"></script>
+
+<script>
+
+  $( function() {
+    var availableTags = [
+      {% for clg in all_colleges %}
+          "{{clg}}",
+      {%endfor%}
+    ];
+    $( "#clg" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  // over write the default autocomplete function to match the option starting with term
+  $.ui.autocomplete.filter = function (array, term) {
+    var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
+    return $.grep(array, function (value) {
+      return matcher.test(value.label || value.value || value);
+    });
+  };
+</script>
+{%endblock%}

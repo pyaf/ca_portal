@@ -1,0 +1,31 @@
+{% extends 'ca/base.html'%}
+{% block title%}
+        <title>Campus Ambassador Portal</title>
+{% endblock %}
+
+
+      {%block intial_content%}
+      <div class="jumbotron text-center">
+      <h1>  Welcome to Technex CA portal</h1>
+      </div>
+      {%endblock%}
+      {% block auth %}
+
+      <div class="text-center">
+        <h2>hello {{request.user.userprofile.name}}! </h2>
+          <h2> Let's move on to the Dashboard</h2>
+        <a class="btn btn-default btn-lg" href="{% url 'ca:dashboard' %}">Dashboard</a>
+      </div>
+      {% endblock %}
+                    {% block unauth %}
+                    <div class="text-center">
+                      <a class="btn btn-primary btn-lg" href="{% url 'technexuser:login' %}">Log In</a>
+
+                      <a class="btn btn-default " href="{% url 'account_signup' %}">Register</a>
+                    </div>
+                    {% endblock %}
+
+        {% block content %}
+
+
+{% endblock%}

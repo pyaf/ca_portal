@@ -1,0 +1,39 @@
+{% extends 'technexuser/loggedin_base.html' %}
+
+{%block extra_css %}
+<link rel="stylesheet" href="/static/css/own/dashboard.css" media="screen" title="no title" charset="utf-8">
+{%endblock%}
+
+{% block navbar_name %}
+<l class="navbar-brand">It's Dashboard!</l>
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+ <div class="container">
+ <div class="row">
+ <div class="col-md-3 columns">
+       </div>
+                 <div class="col-md-9 columns">
+                   <div class="jumbotron">
+                     <h2>Welcome to your TECHNEX! Dashboard</h2>
+                   </div>
+
+                   {% if messages %}
+                   {% for msg in messages %}
+                       <div class="alert alert-{{msg.level_tag}}">
+                   <a href="#" class="close" data-dismiss="alert" aria-label="close">
+                     &times;</a>
+                   {{msg.message}}
+                   </div>
+                   {% endfor %}
+                   </ul>
+                   {% endif %}
+         </div>
+       </div>
+     </div>
+ </div>
+
+
+{% endblock %}

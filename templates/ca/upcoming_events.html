@@ -1,0 +1,59 @@
+{% extends 'ca/loggedin_base.html' %}
+
+{%block extra_css %}
+<link rel="stylesheet" href="/static/css/own/dashboard.css" media="screen" title="no title" charset="utf-8">
+{%endblock%}
+
+{% block navbar_name %}
+<l class="navbar-brand">Upcoming Events</l>
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+  <div class="container">
+   <div class="row">
+     <div class="col-md-3 columns">
+       <div class="panel panel-default">
+       <div class="panel-heading"><strong>Tasks</strong></div>
+         <div class="list-group">
+         <a class="list-group-item  " href="{% url 'ca:to_do_list' %}">
+           Registrations
+           <span class="pull-right">
+           {{technexuser_college_count}}/20
+           </span> </a>
+         <a class="list-group-item " href="{% url 'ca:poster_upload' %}">
+           Poster Upload
+           <span class="pull-right">
+             {{poster_count}}/5
+           </span>
+         </a>
+         <a class="list-group-item " target="_blank" href="https://www.facebook.com/Technex/">
+          Technex FB page
+          <span class="pull-right">
+            <i class="fa fa-thumbs-up" style="color:#3b5998;" aria-hidden="true"></i>
+          </span>
+         </a>
+
+         <a class="list-group-item "target="_blank" href="https://www.facebook.com/Technex/">
+         Technex New Post
+         <div class="pull-right">
+           <span class="badge blue" id="badge_count" value="2">2 new</span> &nbsp; &nbsp;
+           <i class="fa fa-thumbs-up" style="color:#3b5998;" aria-hidden="true"></i>
+           <i class="fa fa-share" style="color:black;" aria-hidden="true"></i>
+         </div>
+          </a>
+        </div>
+       </div>
+      </div>
+      <div class="col-md-9 columns">
+        <div class="jumbotron">
+          <h3>Exciting events comming soon!, Stay Technexed!!</h3>
+        </div>
+      </div>
+      </div>
+     </div>
+ </div>
+</div>
+
+{% endblock %}

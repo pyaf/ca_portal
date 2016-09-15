@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {% block title %} {% endblock %}
+        {%block css %}
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+        {%endblock%}
+
+        {%block extra_css%}
+
+        {% endblock %}
+      </head>
+  <body>
+    {% block navbar%}
+    <nav id="accordion" class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    {% block navbar_name %}
+                     <a class="navbar-brand">Technex CA Portal</a>
+                     {% endblock %}
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="menu nav navbar-nav pull-right list-inline">
+                          <li class="dropdown">
+                            <a class=" dropdown-toggle" href=""  data-toggle="dropdown"><i class="fa fa-bell"></i>
+                              Notifications
+                              {% if total_msgs != 0 %}
+                              <span class="badge badge-own" id="badge_count" value="{{total_msgs}}">{{total_msgs}}</span>
+                                </a>
+                              <ul class="dropdown-menu list-group">
+                                <!-- UserNotifications -->
+                                {% for msg in user_msgs %}
+
+                                <li class="list-group-item">
+                                <form class="form" action="" method="post">
+                                       {{ msg.message }}
+                                    <input  type="checkbox" class=" checkbox pull-right" id="{{msg.id}}" />
+                                  </form>
+                                </li>
+
+                                {% endfor %}
+                                <!-- MassNotifications -->
+                                  {% for msg in mass_msgs %}
+                                  <li class="list-group-item list-group-item-info">
+                                    <form class="form" action="" method="post">
+                                           {{ msg.mass_message }}
+                                        <input  type="checkbox" class=" checkbox pull-right" id="{{msg.id}}" />
+                                      </form>
+                                  </li>
+                                  {% endfor %}
+                                  <li><a href="{% url 'ca:all_notifications' %}">See all Notifications</a></li>
+
+                                  </ul>
+                                  {% else %}
+                                </a>
+                                <ul class="dropdown-menu list-group">
+                                    <li class="list-group-item list-group-item-info">No Notifications for you!!</li>
+                                    <li><a href="{% url 'ca:all_notifications' %}">See all Notifications</a></li>
+                                  </ul>
+                                  {% endif %}
+
+                          </li>
+                          {% block extra_link %}
+                            <li>
+                                <a href="/ca/settings/"><i class="fa fa-cog"></i> Settings</a>
+                            </li>
+                            {% endblock %}
+                            <li>
+                                <a href="/account/logout/"><i class="fa fa-power-off"></i> Log out</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+
+{% endblock%}
+
+
+    {% block content %}
+    {% block message %}
+    {% endblock %}
+    {% endblock %}
+
+
+    {% block extra_body %}
+
+    {% endblock %}
+    {% block js %}
+        <!-- Javascript -->
+        <script src="/static/js/1.11.3jquery.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/notify.js"></script>
+    {% endblock %}
+{% block extra_js%}
+
+{%endblock%}
+    </body>
+    {%block footer%}
+
+    {%endblock%}
+</html>

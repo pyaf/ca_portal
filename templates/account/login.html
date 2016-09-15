@@ -1,0 +1,71 @@
+{% extends "account/base.html" %}
+{% load widget_tweaks %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block extra_head %}
+<style media="screen">
+#id_remember{
+  display: none;
+}
+.btn-primary{
+  margin-left: -15px;
+}
+</style>
+<div class=" jumbotron text-center">
+<h1>  Welcome to Technex CA portal</h1>
+</div>
+
+{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>{% trans "Sign In" %}</h1>
+
+  {% get_providers as socialaccount_providers %}
+
+  {% if socialaccount_providers %}
+
+  {% endif %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-5">
+      <form class="login form-horizontal" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group">
+        {{ field|add_class:"form-control" }}
+        {{field.errors}}
+        </div>
+        {% endfor %}
+
+
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="btn btn-primary " type="submit">Sign In</button>
+        <a class="btn btn-link" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+
+      </form>
+    </div>
+
+    </div>
+    <br>
+    <div class="social-login-buttons">
+      <a class="btn btn-primary" href="/account/facebook/login/?process=login">
+        <i class="fa fa-facebook"></i> Facebook
+      </a>
+    </div>
+  </div>
+
+
+
+
+{% include "socialaccount/snippets/login_extra.html" %}
+</div>
+
+</div>
+</div>
+{% endblock %}

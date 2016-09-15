@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="/static/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+
+<!-- <link rel="stylesheet" href="/static/css/own/dashboard.css" media="screen" title="no title" charset="utf-8"> -->
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+
+      </head>
+      <body>
+
+          <nav id="accordion" class="navbar navbar-default navbar-fixed-top">
+                  <div class="container">
+                      <div class="navbar-header">
+                          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                              <span class="sr-only"></span>
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                          </button>
+
+      <l class="navbar-brand">It's Dashboard!</l>
+
+                      </div>
+                      <div id="navbar" class="navbar-collapse collapse">
+                          <ul class="menu nav navbar-nav pull-right list-inline">
+                                <li class="dropdown">
+                                  <li class="dropdown">
+                                    <a class=" dropdown-toggle" href=""  data-toggle="dropdown"><i class="fa fa-bell"></i>
+                                      Notifications
+                                      {% if total_msgs != 0 %}
+                                      <span class="badge badge-own" id="badge_count" value="{{total_msgs}}">{{total_msgs}}</span>
+                                        </a>
+                                      <ul class="dropdown-menu list-group">
+                                        <!-- UserNotifications -->
+                                        {% for msg in user_msgs %}
+
+                                        <li class="list-group-item">
+                                        <form class="form" action="" method="post">
+                                               {{ msg.message }}
+                                            <input  type="checkbox" class=" checkbox pull-right" id="{{msg.id}}" />
+                                          </form>
+                                        </li>
+
+                                        {% endfor %}
+                                        <!-- MassNotifications -->
+                                          {% for msg in mass_msgs %}
+                                          <li class="list-group-item list-group-item-info">
+                                            <form class="form" action="" method="post">
+                                                   {{ msg.mass_message }}
+                                                <input  type="checkbox" class=" checkbox pull-right" id="{{msg.id}}" />
+                                              </form>
+                                          </li>
+                                          {% endfor %}
+                                          <li><a href="{% url 'ca:all_notifications' %}">See all Notifications</a></li>
+
+                                          </ul>
+                                          {% else %}
+                                        </a>
+                                        <ul class="dropdown-menu list-group">
+                                            <li class="list-group-item list-group-item-info">No Notifications for you!!</li>
+                                            <li><a href="{% url 'ca:all_notifications' %}">See all Notifications</a></li>
+                                          </ul>
+                                          {% endif %}
+
+                                  </li>
+
+                                </li>
+
+                                  <li>
+                                      <a href="/ca/settings/"><i class="fa fa-cog"></i> Settings</a>
+                                  </li>
+
+                                  <li>
+                                      <a href="/account/logout/"><i class="fa fa-power-off"></i> Log out</a>
+                                  </li>
+                          </ul>
+                      </div>
+                  </div>
+              </nav>
+      <div class="content">
+        <div class="container">
+            <div class="row">
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading"><strong>Tasks</strong></div>
+              <div class="list-group tasks">
+
+            {% for taskInstance in taskInstances %}
+               <a class="list-group-item " href="#{{taskInstance.task.taskId}}">
+                 {{taskInstance.task.taskName}}<span id="glydd" class="glyphicon glyphicon-ok-circle" style="color:green"></span>
+                 <span class="pull-right">
+                   {% if taskInstance.status == 100 %}
+                   <i class="fa fa-check" aria-hidden="true"></i>
+                   {% endif %}
+                 </span>
+                   <div class="progress progress-striped">
+                       <div style="width:{{taskInstance.status}}%;" id="glyddpro" class="progress-bar progress-bar-custom" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+
+                       </div>
+                   </div></a>
+{%endfor%}
+              </div>
+            </div>
+          </div>
+
+      <div class="col-md-6 dial" id="1">
+        <form id="1">
+
+         {{ddform.as_p}}
+       <button type="submit" value="directorDetail" id="/task/submitDirector/">Submit</button>
+       </form>
+      </div>
+      <div class="col-md-6 dial" id="2">
+        <form id="2">
+        {{sbdform.as_p}}
+         <button type="submit" value="studentBodyDetail" id="/task/submitStudentBody/">Submit</button>
+</form>
+
+      </div>
+
+       </div>
+      </div>
+    </div>
+<script>
+$(document).ready(function(){
+  var bitch = $("#id_directorDetail").html();
+  console.log(bitch);
+  if(bitch != "") $("#1 button").html("Update");
+  bitch = $("#id_studentBodyDetail").html();
+  if(bitch != "") $("#2 button").html("Update");
+});
+
+$("form button").click(function(event){
+  event.preventDefault();
+  id = "#id_"+$(this).val();
+  url = $(this).prop("id");
+  detail = $(id).val();
+  data = {}
+  data[$(this).val()] = detail
+  console.log(detail);
+  theAjax(url,data);
+});
+function theAjax(uri,data){
+ return $.ajax({
+    type:"POST",
+    dataType:"json",
+    url: uri,
+    data : data
+ });
+}
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $('.tasks a').click(function() {
+        var id = $(this).attr('href');
+        $('.dial').css('display', 'none');
+        $(id).css('display', 'block');
+    });
+
+    if( $('#glyddpro')[0].style.width == '100%'){
+        $('#glydd').css('display', 'inline-block');
+    }
+    if( $('#glysbdpro')[0].style.width == '100%'){
+        $('#glysbd').css('display', 'inline-block');
+    }
+    if( $('#glyfbcpro')[0].style.width == '100%'){
+        $('#glyfbc').css('display', 'inline-block');
+    }
+    if( $('#glyfblpro')[0].style.width == '100%'){
+        $('#glyfbl').css('display', 'inline-block');
+    }
+
+});
+
+</script>
+
+
+        <!-- Javascript -->
+        <script src="/static/js/1.11.3jquery.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/notify.js"></script>
+</body></html>

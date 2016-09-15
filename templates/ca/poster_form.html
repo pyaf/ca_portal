@@ -1,0 +1,60 @@
+{% extends 'ca/loggedin_base.html' %}
+
+{%block extra_css %}
+<link rel="stylesheet" href="/static/css/own/dashboard.css" media="screen" title="no title" charset="utf-8">
+{%endblock%}
+
+{% block navbar_name %}
+<l class="navbar-brand">Posters!</l>
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-3 columns">
+
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>Tasks</strong></div>
+            <div class="list-group">
+             <a class="list-group-item " href="{% url 'ca:to_do_list' %}">
+               Registrations
+               <span class="pull-right">
+               {{technexuser_college_count}}/20
+               </span></a>
+
+
+            </div>
+          </div>
+        </div>
+      <div class="col-md-6 ">
+        <div class="list-group">
+          <li class="list-group-item">
+            {% if poster_count != 0 %}
+            Total number of posters uploaded by you : <b>{{poster_count}}</b>
+            {% else %}
+            You have not uploaded any posters yet!!
+            {% endif %}
+          </li>
+        </div>
+          <div class="container">
+              <form  method="post" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                Upload New Poster : <br> <br>
+                <input name="poster" type="file"/> <br>
+                {{form.errors}}
+                <button class="btn btn-info" type="submit">Upload</button>
+              </form>
+          </div>
+<!-- style="display: none;" onchange="$('#upload-file-info').html($(this).val());" -->
+<br>
+&nbsp <a href="{% url 'ca:all_posters' %}" class="btn btn-default">See all Uploaded Posters</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}
