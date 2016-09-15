@@ -106,31 +106,6 @@ def PosterUploadView(request):
     else:
         return render(request,template_name,context)
 
-@csrf_exempt
-def NoticeBooleanUpdate(request):
-    if request.method == "POST" and request.is_ajax():
-        msg_id = request.POST.get('msg_id')
-        print msg_id
-        response_data = {}
-        notice = request.user.caprofile.usernotification_set.get(id=msg_id)
-        notice.mark_read = True
-        notice.save()
-
-        return HttpResponse(
-            json.dumps(response_data),
-            content_type = "application/json"
-        )
-    else:
-        return HttpResponse(
-            json.dumps({"nothing to see":"this is not working"}),
-            content_type = "application/json"
-        )
-@login_required(login_url = "/login")
-def notificationsView(request):
-    template_name = 'ca/notifications.html'
-    context = context_call(request)
-    return render(request, template_name, context)
-
 
 '''
 Auto like,comment and share of posts of technex page while checking if post already shared.

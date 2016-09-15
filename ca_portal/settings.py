@@ -20,6 +20,7 @@ DEBUG = True
 INSTALLED_APPS = [
     'ca',
     'task',
+    'notice',
     'allauth',
     'allauth.socialaccount',
     'allauth.account',

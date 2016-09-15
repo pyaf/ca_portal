@@ -78,7 +78,7 @@ def LoginView(request):
         user = authenticate(username=email, email=email, password=password)
         if user is not None:
             login(request,user)
-            return redirect('/ca/dashboard')
+            return redirect('/dashboard')
         else:
             messages.error(request,'Invalid Credentials',fail_silently=True)
             return render(request,template_name,{})
@@ -125,7 +125,7 @@ def CARegistrationView(request):
             new_user = authenticate(username=email,password=password1)
             login(request,new_user)
 
-            return redirect('/ca/dashboard')
+            return redirect('/dashboard')
         else:# already a user.
 
             messages.warning(request,'email already registered!, if you have already registered for Technex, the link of CA registration is at dashboard',fail_silently=True)
@@ -153,3 +153,8 @@ def AccountDetailView(request):
     template_name = 'ca/settings.html'
     context = context_call(request)
     return render(request, template_name, context)
+
+@login_required(login_url = "/login")
+def LogoutView(request):
+    logout(request)
+    return redirect('/')

@@ -31,7 +31,14 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 form-box">
-
+                          {% if messages %}
+                          {% for msg in messages %}
+                              <div class="alert alert-danger">
+                          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                          {{msg.message}}
+                            </div>
+                          {% endfor %}
+                          {% endif %}
                             <form role="form" action="" method="post" class="login-form">
 
                           {%csrf_token%}
@@ -49,12 +56,12 @@
 
                                        <div class="form-group">
                                             <label class="sr-only" for="form-email">Email</label>
-                                            <input name="form-email" placeholder="Email..."  class="form-email form-control" id="laluram" type="text">
+                                            <input name="email" placeholder="Email..."  class="form-email form-control" id="laluram" type="text">
                                             <span class="m-field-error" id="mail-error"></span>
                                         </div>
                                         <div class="form-group">
                                             <label class="sr-only" for="form-password">Password</label>
-                                            <input type="password" name="form-password"   placeholder="Password..." class="form-password form-control" id="password">
+                                            <input type="password" name="password"   placeholder="Password..." class="form-password form-control" id="password">
                                         </div>
                                         <div class="form-group">
 

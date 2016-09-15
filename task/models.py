@@ -32,29 +32,7 @@ class StudentBodyDetail(models.Model):
 
     def __unicode__(self):
         return "%s" %self.ca
-class MassNotification(models.Model):
-    ca = models.ManyToManyField(CAProfile)
-    mass_message = models.TextField()
-    creation_time = models.DateTimeField(auto_now_add=True, blank=True)
-    mark_read = models.ManyToManyField(CAProfile, related_name='mark_read',blank=True)
 
-    def __unicode__(self):
-        return self.mass_message
-# bom = user.massnotification_set.all().order_by('-creation_time')
-#request.user.massnotification_set.all()
-#
-
-
-class UserNotification(models.Model):
-    ca = models.ForeignKey(CAProfile)
-    message = models.TextField()
-    mark_read = models.BooleanField(default=False)
-    creation_time = models.DateTimeField(auto_now_add=True, blank=True)
-
-    def __unicode__(self):
-        return self.message
-
-#request.user.usernotification_set.all()
 
 #primary_key=True implies null=False and unique=True.
 #Only one primary key is allowed on an object.

@@ -7,8 +7,8 @@ urlpatterns = [
     url(r'^', include('task.urls')),
 
     url(r'^admin/', admin.site.urls),
-    
+
     url(r'^account/', include('allauth.urls')),
 
-
+    url(r'^',include('notice.urls')),
 ]

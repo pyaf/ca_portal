@@ -8,10 +8,9 @@ app_name='ca'
 
 urlpatterns = [
 	#first page : index page
-	url(r'^$', IndexView.as_view(), name= 'index'),
+	url(r'^$', LoginView, name= 'login' ),
 
-	url(r'^login/$', LoginView, name= 'login' ),
-
+	url(r'^login', LoginView, name= 'login' ),
 
 	url(r'^register/$', CARegistrationView, name= 'register' ),
 
@@ -23,6 +22,8 @@ urlpatterns = [
 	# url(r'^/logout/$', 'django.contrib.auth.views.logout',{'next_page': '/accounts/login'})
 
 	url(r'^settings/$', AccountDetailView, name='settings'),
+
+	url(r'^logout/$', LogoutView, name='logout'),
 
 
 ]

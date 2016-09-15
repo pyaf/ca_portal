@@ -61,14 +61,14 @@
                                       </form>
                                   </li>
                                   {% endfor %}
-                                  <li><a href="{% url 'ca:all_notifications' %}">See all Notifications</a></li>
+                                  <li><a href="{% url 'notice:all_notifications' %}">See all Notifications</a></li>
 
                                   </ul>
                                   {% else %}
                                 </a>
                                 <ul class="dropdown-menu list-group">
                                     <li class="list-group-item list-group-item-info">No Notifications for you!!</li>
-                                    <li><a href="{% url 'ca:all_notifications' %}">See all Notifications</a></li>
+                                    <li><a href="{% url 'notice:all_notifications' %}">See all Notifications</a></li>
                                   </ul>
                                   {% endif %}
 
