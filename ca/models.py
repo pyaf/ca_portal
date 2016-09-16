@@ -1,5 +1,4 @@
 from django.db import models
-from allauth import app_settings as allauth_app_settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
