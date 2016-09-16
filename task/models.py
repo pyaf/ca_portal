@@ -62,7 +62,7 @@ class Poster(models.Model):
 
 class FbConnect(models.Model):
     ca = models.ForeignKey(CAProfile)
-    accessToken = models.CharField(max_length = 150,null = True,blank = True)
+    accessToken = models.CharField(max_length = 250,null = True,blank = True)
     uid = models.CharField(max_length = 150,null = True, blank = True)
     def __unicode__(self):
         return self.uid
