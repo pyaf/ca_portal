@@ -14,7 +14,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "2=iplcn+7@rb7np=cn5gxewwlh_ks5q&qoz6$3&4_l+^jg@3+a"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 # Application definition
 
 INSTALLED_APPS = [
