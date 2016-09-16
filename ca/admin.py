@@ -54,5 +54,6 @@ admin.site.unregister(User)
 admin.site.unregister(Group)
 admin.site.register(CAProfile)
 admin.site.register(User,UserAdmin)
+admin.site.register(College)
 
 # admin.site.register(TechnexUser,TechnexUserAdmin)

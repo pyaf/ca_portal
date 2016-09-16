@@ -5,7 +5,7 @@ app_name='notice'
 
 urlpatterns = [
 
-   	url(r'^all_notifications/$', NotificationsView, name='all_notifications'),
+   	url(r'^all_notifications/$', NotificationsView, name='all_notices'),
 
 	url(r'^notified/$', NoticeBooleanUpdate, name='notified'),
 

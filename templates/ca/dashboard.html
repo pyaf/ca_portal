@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -31,49 +30,6 @@
                       </div>
                       <div id="navbar" class="navbar-collapse collapse">
                           <ul class="menu nav navbar-nav pull-right list-inline">
-                                <li class="dropdown">
-                                  <li class="dropdown">
-                                    <a class=" dropdown-toggle" href=""  data-toggle="dropdown"><i class="fa fa-bell"></i>
-                                      Notifications
-                                      {% if total_msgs != 0 %}
-                                      <span class="badge badge-own" id="badge_count" value="{{total_msgs}}">{{total_msgs}}</span>
-                                        </a>
-                                      <ul class="dropdown-menu list-group">
-                                        <!-- UserNotifications -->
-                                        {% for msg in user_msgs %}
-
-                                        <li class="list-group-item">
-                                        <form class="form" action="" method="post">
-                                               {{ msg.message }}
-                                            <input  type="checkbox" class=" checkbox pull-right" id="{{msg.id}}" />
-                                          </form>
-                                        </li>
-
-                                        {% endfor %}
-                                        <!-- MassNotifications -->
-                                          {% for msg in mass_msgs %}
-                                          <li class="list-group-item list-group-item-info">
-                                            <form class="form" action="" method="post">
-                                                   {{ msg.mass_message }}
-                                                <input  type="checkbox" class=" checkbox pull-right" id="{{msg.id}}" />
-                                              </form>
-                                          </li>
-                                          {% endfor %}
-                                          <li><a href="{% url 'ca:all_notifications' %}">See all Notifications</a></li>
-
-                                          </ul>
-                                          {% else %}
-                                        </a>
-                                        <ul class="dropdown-menu list-group">
-                                            <li class="list-group-item list-group-item-info">No Notifications for you!!</li>
-                                            <li><a href="{% url 'notice:all_notifications' %}">See all Notifications</a></li>
-                                          </ul>
-                                          {% endif %}
-
-                                  </li>
-
-                                </li>
-
                                   <li>
                                       <a href="/settings/"><i class="fa fa-cog"></i> Settings</a>
                                   </li>
@@ -177,11 +133,21 @@
         </div>
 
 <div class="col-md-3">
-  <div class="alert alert-info">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-
-  <strong>Info!</strong> Indicates a neutral informative change or action.
-</div>
+  <a href="">See all Notifications</a>
+<br><br>
+    {% for msg in user_msgs %}
+    <div class="alert alert-info">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+           {{ msg.message }}
+         </div>
+    {% endfor %}
+    <!-- MassNotifications -->
+      {% for msg in mass_msgs %}
+      <div class="alert alert-info">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ msg.mass_message }}
+           </div>
+      {% endfor %}
 </div>
        </div>
       </div>
