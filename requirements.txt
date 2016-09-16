@@ -1,7 +1,5 @@
 dj-database-url==0.4.1
 Django==1.9.8
-django-allauth==0.26.1
-django-widget-tweaks==1.4.1
 facebook-sdk==2.0.0
 gdata==2.0.18
 google-api-python-client==1.5.3
@@ -19,8 +17,6 @@ python-openid==2.2.5
 requests==2.11.0
 requests-oauthlib==0.6.2
 rsa==3.4.2
-sendgrid==2.2.1
-sendgrid-django==2.0.0
 simplejson==3.8.2
 six==1.10.0
 smtpapi==0.3.1

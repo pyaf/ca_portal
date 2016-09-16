@@ -158,6 +158,38 @@ def AccountDetailView(request):
     return render(request, template_name, context)
 
 @login_required(login_url = "/login")
+def PasswordChangeView(request):
+    template_name = 'ca/passwordChange.html'
+    context = {
+        'form':PasswordChangeForm(),
+    }
+    if request.method == 'POST':
+        post = request.POST
+        form = PasswordChangeForm(request.POST)
+        if form.is_valid():
+            oldPassword = post.get('oldPassword')
+            password1 = post.get('password1')
+            password2 = post.get('password2')
+            if password1 == password2 :
+                user = authenticate(username=request.user.email,password=oldPassword)
+                if user is not None:
+                    request.user.set_password(password1)
+                    request.user.save()
+                    messages.success(request,'Password successfully set!',fail_silently=True)
+                    return redirect('/')
+                else:
+                    messages.warning(request,'Wrong old password!',fail_silently=True)
+                    return render(request,template_name,context)
+
+            else:
+                messages.warning(request,"Passwords didn't match!!",fail_silently=True)
+                return render(request,template_name,context)
+    else:
+        return render(request, template_name, context)
+
+
+
+@login_required(login_url = "/login")
 def LogoutView(request):
     logout(request)
     return redirect('/')

@@ -66,7 +66,17 @@
               </div>
             </div>
           </div>
+          <div class="col-md-6">
 
+          {% if messages %}
+          {% for msg in messages %}
+              <div class="alert alert-danger">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          {{msg.message}}
+            </div>
+          {% endfor %}
+          {% endif %}
+        </div>
       <div class="col-md-6 dial" id="1">
         <form id="1">
         {{dd_description}}

@@ -21,14 +21,9 @@ INSTALLED_APPS = [
     'ca',
     'task',
     'notice',
-    'allauth',
-    'allauth.socialaccount',
-    'allauth.account',
+
     'django.contrib.sites',
-    'widget_tweaks',
-    # 'sgbackend',
-    'allauth.socialaccount.providers.facebook',
-    # 'allauth.socialaccount.providers.google',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,8 +71,6 @@ WSGI_APPLICATION = 'ca_portal.wsgi.application'
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin and to ensure compatibility with other packages
     'django.contrib.auth.backends.ModelBackend',
-    # 'allauth' specific authentication methods
-    'allauth.account.auth_backends.AuthenticationBackend',
 
 ]
 
@@ -146,25 +139,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/fblogin'
+# LOGIN_REDIRECT_URL = '/fblogin'
 
-# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/profile_registration/'
-# ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/profile_registration/'
 
-# Set to console for development/testing
 EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
-# Custom allauth settings
-# Use email as the primary identifier
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_USERNAME_REQUIRED = False
 
-
-# Fix: username length is too small,email must be unique
-# User._meta.local_fields[1].__dict__['max_length'] = 75
-# User._meta.local_fields[4].__dict__['_unique'] = True
 SOCIALACCOUNT_PROVIDERS = \
     {'facebook':
        {'METHOD': 'oauth2',

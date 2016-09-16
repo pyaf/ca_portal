@@ -23,6 +23,8 @@ urlpatterns = [
 
 	url(r'^settings/$', AccountDetailView, name='settings'),
 
+	url(r'^passwordChange/$', PasswordChangeView, name='passwordChange'),
+
 	url(r'^logout/$', LogoutView, name='logout'),
 
 
