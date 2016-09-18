@@ -2,8 +2,8 @@ from django.contrib import admin
 
 from notice.models import *
 
-class MassNotificationAdmin(admin.ModelAdmin):
-    list_display = ['mass_message']
+# class MassNotificationAdmin(admin.ModelAdmin):
+#     list_display = ['mass_message']
 
 class UserNotificationAdmin(admin.ModelAdmin):
 
@@ -14,5 +14,5 @@ class UserNotificationAdmin(admin.ModelAdmin):
 
 
     list_display = [name,College,'message','mark_read']
-admin.site.register(MassNotification, MassNotificationAdmin)
+# admin.site.register(MassNotification, MassNotificationAdmin)
 admin.site.register(UserNotification, UserNotificationAdmin)

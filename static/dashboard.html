@@ -1,17 +1,21 @@
 <!DOCTYPE html>
+<!-- saved from url=(0035)http://localhost:8000/ca/dashboard/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
+         
+        
+        <link rel="stylesheet" href="./dashboard_files/theme.min%20(4).css">
+    <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="./dashboard_files/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
 
-<link rel="stylesheet" href="/static/dashboard_files/theme.min%20(4).css">
-<link rel="stylesheet" href="/static/dashboard_files/style.css">
-<link rel="stylesheet" href="/static/dashboard_files/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
-
-
-<script type="text/javascript" src="/static/dashboard_files/jquery.js"></script>
-<script type="text/javascript" src="/static/dashboard_files/script.js"></script>
+        
+<link rel="stylesheet" href="./dashboard_files/dashboard.css" media="screen" title="no title" charset="utf-8">
+<script type="text/javascript" src="dashboard_files/jquery.js"></script>
+<script type="text/javascript" src="script.js"></script>
 <!-- <link rel="stylesheet" href="/static/css/reset.css"> -->
 <!-- <link rel="stylesheet" href="/static/css/style.css"> -->
 
@@ -21,8 +25,8 @@
 
   <!-- Modal -->
   <div class="modal fade" id="notify-all-modal" role="dialog">
-    <div class="modal-dialog" id="notification-all-modal">
-
+    <div class="modal-dialog" id="notification-all-modal"> 
+    
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -30,13 +34,7 @@
           <h4 class="modal-title">NOATIFICATIONS</h4>
         </div>
         <div class="modal-body" id="notify-all-modal-body">
-        {% for msg in all_user_msgs %}
-          <p>
-            {{forloop.counter}} : {{msg.message}}
-          <span class="pull-right">
-            {{msg.creation_time}}
-          </span> </p>
-          {% endfor %}
+          <p>Some text in the modal.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -45,11 +43,13 @@
 
        </div>
   </div>
+  
+
 
     <!-- dijpwihdwhdwbwd -->
      <div class="modal" id="startup-task-modal" role="dialog">
     <div class="modal-dialog startup-tip" id="modal-task">
-
+    
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -71,7 +71,7 @@
   <!-- njdenjdbkdbkbkdskbsdbkdsbkh -->
    <div class="modal" id="startup-leaderboard-modal" role="dialog">
     <div class="modal-dialog startup-tip" id="modal-leaderboard">
-
+    
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -79,7 +79,7 @@
           <h4 class="modal-title">leaderboard</h4>
         </div>
         <div class="modal-body">
-          <p>See your position among all the Campus Ambassadors</p>
+          <p>yaha dekho tmhari tarah k aur kite gandu hai aur tm kis darje k ho unme se</p>
         </div>
         <div class="modal-footer">
 
@@ -93,7 +93,7 @@
   <!--  ksihdiihdaihdqibhdqbidq-->
    <div class="modal" id="startup-settings-modal" role="dialog">
     <div class="modal-dialog startup-tip" id="modal-settings">
-
+    
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -115,7 +115,7 @@
   <!-- sdojiudsiudsbiudbiudwbiudwbiudw -->
    <div class="modal" id="startup-notifications-modal" role="dialog">
     <div class="modal-dialog startup-tip" id="modal-notifications">
-
+    
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -135,6 +135,7 @@
        </div>
   </div>
   <!-- ekonnocnovenoeenoinoivenioevnoive -->
+
     <nav id="accordion" class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -144,157 +145,234 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-
-<l class="navbar-brand"><a href="www.technex.in"><div class="tech"><img src="/static/dashboard_files/logo_technex_white_17.png"></div></a></l>
+                    
+<l class="navbar-brand"><a href="www.technex.in"><div class="tech"><img src="dashboard_files/logo_technex_white_17.png"></div></a></l>
 
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="menu nav navbar-nav pull-right list-inline">
-                            <li>
-                            <a href="#" id="leaderboard"><i class="fa fa-list-ol"></i> Leaderboard</a>
+                     <li>
+                               <a href="http://localhost:8000/ca/settings/" id="leaderboard"><i class="fa fa-cog"></i >Leaderboard</a>
                             </li>
-
+                            
                             <li>
-                                <a href="/settings/" id="settings"><i class="fa fa-cog"></i> Settings</a>
+                                <a href="http://localhost:8000/ca/settings/" id="settings"><i class="fa fa-cog"></i> Settings</a>
                             </li >
-
+                            
                             <li>
-                                <a href="/logout/" id="Logout"><i class="fa fa-power-off"></i> Log out</a>
+                                <a href="http://localhost:8000/account/logout/" id="Logout"><i class="fa fa-power-off"></i> Log out</a>
                             </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
+
+
+
+
+
+    
+
 <div class="content">
   <div class="container">
       <div class="row">
   <div class="col-md-3">
-
     <div class="panel panel-default" id="task-panel">
       <div class="panel-heading"><strong>Tasks</strong></div>
         <div class="list-group tasks">
-          {% for taskInstance in taskInstances %}
-         <a class="list-group-item " href="#{{taskInstance.task.taskId}}">
-           {{taskInstance.task.taskName}}<span id="glydd" class="glyphicon " style="color:green"></span>
+
+          
+         <a class="list-group-item " href="#dd">
+           Director Contact Details<span id="glydd" class="glyphicon glyphicon-ok-circle" style="color:green"></span>
            <span class="pull-right">
-             {% if taskInstance.status == 100 %}
-             <i class="fa fa-check" aria-hidden="true"></i>
-             {% endif %}
            </span>
              <div class="progress progress-striped">
-                 <div style="width:{{taskInstance.status}}%;" id="glyddpro" class="progress-bar progress-bar-custom" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                 <div style="width:100%;" id="glyddpro" class="progress-bar progress-bar-custom" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+
                  </div>
              </div></a>
-{%endfor%}
+            
+         <a class="list-group-item " href="#sbd">
+           Student Body Head Details<span id="glysbd" class="glyphicon glyphicon-ok-circle" style="color:green"></span>
+           <span class="pull-right">
+           </span><div class="progress progress-striped">
+             <div id="glysbdpro" class="progress-bar progress-bar-custom" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+
+             </div>
+         </div></a>
+            
+         <a class="list-group-item " href="#fbc">
+           facebook connect<span id="glyfbc" class="glyphicon glyphicon-ok-circle" style="color:green"></span>
+           <span class="pull-right">
+           </span><div class="progress progress-striped">
+             <div id="glyfbcpro" class="progress-bar progress-bar-custom" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
+
+             </div>
+         </div></a>
+            
+         <a class="list-group-item " href="#fbl">
+           Facebook Like<span id="glyfbl" class="glyphicon glyphicon-ok-circle" style="color:green"></span>
+           <span class="pull-right">
+           </span><div class="progress progress-striped">
+             <div id="glyfblpro" class="progress-bar progress-bar-custom" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+
+             </div>
+         </div></a>
+            
         </div>
       </div>
     </div>
-
-     <div class="col-md-5" id="banner">
-       <img src="/static/dashboard_files/technex_init_banner.jpg"/>
-     </div>
-
-      <div class="col-md-5 dial" id="1">
+              <div class="col-md-5" id="banner"><img src="dashboard_files/technex_init_banner.jpg"> </div>
+      <div class="col-md-5 dial" id="dd">
           <div class="well bs-component live-less-editor-hovercontainer" data-relatedvars="legend-color,legend-border-color,input-color,input-height-base,input-bg,input-border,input-border-radius,input-border-focus,input-color-placeholder,input-bg-disabled,input-height-small,input-height-large,state-success-text,state-success-bg,state-warning-text,state-warning-bg,state-danger-text,state-danger-bg,input-group-addon-bg,input-group-addon-border-color,input-border-radius-large,input-border-radius-small">
-              <form class="form-horizontal" id="1">
+              <form class="form-horizontal">
                   <fieldset>
                       <legend>Director Contact Details</legend>
 
                       <div class="form-group">
                           <div class="col-lg-10">
-                          {{ddform.directorDetail}}
+                              <textarea class="form-control" rows="3" id="textArea"></textarea>
                           </div>
                       </div>
 
                       <div class="form-group">
                           <div class="col-lg-10 col-lg-offset-2">
-                              <button type="submit" class="btn btn-primary" value="directorDetail" id="/submitDirector/" >Submit</button>
+                              <button type="submit" class="btn btn-primary">Submit</button>
                           </div>
                       </div>
                   </fieldset>
               </form>
-              <div id="live-less-editor-hoverbuttons" style="display: none;">
-             <div id="live-less-editor-relatedvars-button">related variables</div>
-           </div>
-         </div>
+              <div id="live-less-editor-hoverbuttons" style="display: none;"><div id="live-less-editor-relatedvars-button">related variables</div></div></div>
       </div>
-
-      <div class="col-md-5 dial" id="2">
+      <div class="col-md-5 dial" id="sbd">
           <div class="well bs-component live-less-editor-hovercontainer" data-relatedvars="legend-color,legend-border-color,input-color,input-height-base,input-bg,input-border,input-border-radius,input-border-focus,input-color-placeholder,input-bg-disabled,input-height-small,input-height-large,state-success-text,state-success-bg,state-warning-text,state-warning-bg,state-danger-text,state-danger-bg,input-group-addon-bg,input-group-addon-border-color,input-border-radius-large,input-border-radius-small">
-              <form class="form-horizontal" id="2">
+              <form class="form-horizontal">
                   <fieldset>
                       <legend>Student Body Head Details</legend>
 
                       <div class="form-group">
                           <div class="col-lg-10">
-                          {{sbdform.studentBodyDetail}}
+                              <textarea class="form-control" rows="3" id="textArea"></textarea>
                           </div>
                       </div>
 
                       <div class="form-group">
                           <div class="col-lg-10 col-lg-offset-2">
-                              <button type="submit" class="btn btn-primary" value="studentBodyDetail" id="/submitStudentBody/">Submit</button>
+                              <button type="submit" class="btn btn-primary">Submit</button>
                           </div>
                       </div>
                   </fieldset>
               </form>
-              <div id="live-less-editor-hoverbuttons" style="display: none;">
-                <div id="live-less-editor-relatedvars-button">related variables</div>
-              </div>
-            </div>
+              <div id="live-less-editor-hoverbuttons" style="display: none;"><div id="live-less-editor-relatedvars-button">related variables</div></div></div>
       </div>
 
-      <div class="col-md-5 dial" id="3">
-
-        <button onclick="fb_login()" class="btn btn-primary">
-          <i class="fa fa-facebook"> Facebook Connect</i>
-        </button>
-      </div>
-
-          <!-- <div class="col-md-5 dial" id="fbl">
+          <div class="col-md-5 dial" id="fbc">
+              FBC
+          </div>
+          <div class="col-md-5 dial" id="fbl">
               FBL
-          </div> -->
+          </div>
 
           <div class="col-lg-4 notification-panel" id="notification-panel">
               <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <strong>Notifications <span class="badge">{{user_msgs.count}}</span>
-                      <div class="seeall">
-                        <a class="notify-all" data-target="#notify-all-modal" data-toggle="modal" href="#">See All</a>
-                      </div>
-                    </strong>
-                  </div>
+                  <div class="panel-heading"><strong>Notifications <span class="badge">42</span><div class="seeall"><a class="notify-all" data-target="#notify-all-modal" data-toggle="modal" href="#">See All</a></div></strong></div>
                   <div class="list-group tasks">
-                  {% for msg in user_msgs %}
-                    <li class="list-group-item ">
-                      <div class="panel-body">
 
-                          {{msg.message}}
 
-                      <span class="pull-right">
-                       <input type="checkbox" class=" checkbox pull-right" id="{{msg.id}}" />
-                      </span>
+                      <a class="list-group-item " href="#fbl">
+                          <div class="panel-body">
+                              Notification #1
+                          </div>
+           <span class="pull-right">
+           </span></a>
 
-                    </div>
-                  </li>
-                    {% endfor %}
+                      <a class="list-group-item " href="#fbl">
+                          <div class="panel-body">
+                              Notification #2
+                          </div>
+           <span class="pull-right">
+           </span></a>
 
-                    <div class="list-group-item ">
-                    </div>
+                      <a class="list-group-item " href="#fbl">
+                          <div class="panel-body">
+                              Notification #3
+                          </div>
+           <span class="pull-right">
+           </span></a>
+
+                      <a class="list-group-item " href="#fbl">
+                          <div class="panel-body">
+                              Notification #4
+                          </div>
+           <span class="pull-right">
+           </span></a>
+
                   </div>
               </div>
           </div>
 
       </div>
-
        </div>
       </div>
     </div>
-    <script src="/static/js/facebook.js" charset="utf-8"></script>
-    <script src="/static/dashboard_files/1.11.3jquery.min.js"></script>
-    <script src="/static/js/notify.js"></script>
-    <script src="/static/dashboard_files/bootstrap.min.js"></script>
 
-</body>
-</html>
+
+<script>
+$("form button").click(function(event){
+  event.preventDefault();
+  id = "#id_"+$(this).val();
+  url = $(this).prop("id");
+  detail = $(id).val();
+  data = {}
+  data[$(this).val()] = detail
+  console.log(detail);
+  theAjax(url,data);
+});
+function theAjax(uri,data){
+ return $.ajax({
+    type:"POST",
+    dataType:"json",
+    url: uri,
+    data : data
+ });
+}
+</script>
+
+
+
+
+    
+
+    
+    
+        <!-- Javascript -->
+        <script src="./dashboard_files/1.11.3jquery.min.js"></script>
+        <script src="./dashboard_files/bootstrap.min.js"></script>
+        <script src="./dashboard_files/notify.js"></script>
+    
+
+<!-- <script src="/static/js/index.js" charset="utf-8"></script> -->
+
+    
+    
+
+    
+
+</body></html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<

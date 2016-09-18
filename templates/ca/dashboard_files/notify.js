@@ -6,7 +6,7 @@ console.log($('#badge_count span').text())
 
 function notified(){
   $.ajax({
-    url : "/notified/",
+    url : "/ca/notified/",
     type : "POST",
     dataType : "json",
     data : { msg_id : $('.checkbox').attr('id') },

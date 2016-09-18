@@ -14,8 +14,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "2=iplcn+7@rb7np=cn5gxewwlh_ks5q&qoz6$3&4_l+^jg@3+a"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# Application definition
+DEBUG = True
+if 'DEBUG' in os.environ:
+    if (os.environ['DEBUG']=='FALSE'):
+        DEBUG = False
+    else:
+        DEBUG = True
+
 
 INSTALLED_APPS = [
     'ca',

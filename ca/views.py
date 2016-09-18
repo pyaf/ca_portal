@@ -11,10 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
-import requests
-import json
-import facebook
-import re
+import requests, json, facebook, re
 from ca.forms import *
 from ca.models import *
 from task.models import *
@@ -44,18 +41,18 @@ def context_call(request):
     context = {
             # 'technexuser_college_count' : TechProfile.objects.filter(college=college).count(),
             'caprofile' : ca,
-            'mass_msgs': ca.massnotification_set.all,
             'user_msgs': ca.usernotification_set.filter(mark_read=False),
             'all_user_msgs': ca.usernotification_set.all(),
-            'total_msgs': ca.massnotification_set.count() + ca.usernotification_set.filter(mark_read=False).count(),
-            # 'tasks' : Task.objects.all(),
-            'dd_description':Task.objects.get(taskId=1).taskDescription,
-            'sbd_description':Task.objects.get(taskId=2).taskDescription,
-            'fb_description':Task.objects.get(taskId=3).taskDescription,
             'taskInstances' : taskInstances,
             'ddform':DirectorDetailForm(initial={'directorDetail':ddData}),
             'sbdform':StudentBodyDetailForm(initial={'studentBodyDetail' : sbdData}),
 
+            # 'dd_description':Task.objects.get(taskId=1).taskDescription,
+            # 'sbd_description':Task.objects.get(taskId=2).taskDescription,
+            # 'fb_description':Task.objects.get(taskId=3).taskDescription,
+            # 'mass_msgs': ca.massnotification_set.all,
+            # 'total_unread_msgs': ca.massnotification_set.all().count() + ca.usernotification_set.filter(mark_read=False).count(),
+            # 'tasks' : Task.objects.all(),
             # 'poster_count': ca.poster_set.count(),
             # 'form' : ImageUploadForm(),
             # 'techprofiles' : TechProfile.objects.filter(college=college),
@@ -66,11 +63,29 @@ def context_call(request):
     # print context['tasks']
     return context
 
+def SheetUpdate(caprofile):
+    dic = {
+    'name' : caprofile.user.first_name,
+    'email' : caprofile.user.email,
+    'college' : caprofile.college,
+    'year' : caprofile.year,
+    'mobileNumber': caprofile.mobile_number,
+    'whatsappNumber': caprofile.whatsapp_number,
+    'postalAddress' : caprofile.postal_address,
+    'pincode': caprofile.pinCode,
+    'whyChooseYou': caprofile.whyChooseYou,
+    'pastExp':caprofile.pastExp,
+    }
+
+    url = 'https://script.google.com/macros/s/AKfycbzEw71pbzcam4W2Jh9-bExZU7Ocv_fBULgmZBf7rMSxwdrHYY0/exec'
+    requests.post(url,data=dic)
+
 class IndexView(generic.View):
     def get(self, request):
-        template_name = 'ca/index.html'
-        return render(request, template_name, {})
+        # template_name = 'ca/index.html'
 
+        # return render(request, template_name, {})
+        return redirect('http://technex.in/ca')
 
 def LoginView(request):
     template_name = 'ca/login.html'
@@ -97,8 +112,8 @@ def CARegistrationView(request):
     }
     if request.method == "POST":
         post = request.POST
-        email = post['email']
-        password1 = post['password1']
+        email = post['form-email']
+        password1 = post['form-password']
         try:
             already_a_user = User.objects.get(username=email)
         except:# unique user.
@@ -106,31 +121,36 @@ def CARegistrationView(request):
 
         if not already_a_user:#create new User instance.
             user = User.objects.create_user(username=email,email=email)
-            user.first_name = post.get('name')
+            user.first_name = post.get('form-first-name')
             user.set_password(password1)
             user.save()
 
             caprofile = CAProfile.objects.create(user=user)
             try:
-                college = College.objects.get(collegeName=post.get('college'))
+                college = College.objects.get(collegeName=post.get('form-college'))
             except:
-                college = College.objects.create(collegeName=post.get('college'))
+                college = College.objects.create(collegeName=post.get('form-college'))
 
             caprofile.college = college
             caprofile.year = post.get('year')
-            caprofile.mobile_number = post.get('mobile_number')
-            caprofile.whatsapp_number = post.get('whatsapp_number')
-            caprofile.postal_address = post.get('postal_address')
+            caprofile.mobile_number = post.get('form-mobilenumber')
+            caprofile.whatsapp_number = post.get('form-whatsapp')
+            caprofile.postal_address = post.get('form-address')
+            caprofile.pinCode = post.get('form-pincode')
+            caprofile.whyChooseYou = post.get('form-choose')
+            caprofile.pastExp = post.get('form-experiences')
             caprofile.save()
+            SheetUpdate(caprofile)
             tasks = Task.objects.all()
             for task in tasks:
                 taskInstance = TaskInstance(task = task, ca = caprofile)
                 taskInstance.save()
+            # UserNotification.objects.create(ca=caprofile,message)
             new_user = authenticate(username=email,password=password1)
             login(request,new_user)
 
-            # return redirect('/dashboard')
-            return render(request,'ca/thanks.html',{})
+            return redirect('/dashboard')
+            # return render(request,'ca/dashboard.html',{})
         else:# already a user.
 
             messages.warning(request,'email already registered!, if you have already registered for Technex, the link of CA registration is at dashboard',fail_silently=True)

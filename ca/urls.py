@@ -8,22 +8,22 @@ app_name='ca'
 
 urlpatterns = [
 	#first page : index page
-	url(r'^$', LoginView, name= 'login' ),
+	url(r'^$', IndexView.as_view(), name= 'login' ),
 
-	# url(r'^login', LoginView, name= 'login' ),
+	url(r'^login', LoginView, name= 'login' ),
 
 	url(r'^register/$', CARegistrationView, name= 'register' ),
 
 	# url(r'^fblogin/$', FbLogin, name= 'fblogin' ),
 
 	#dashboard
-	# url(r'^dashboard/$', DashboardView, name= 'dashboard' ),
+	url(r'^dashboard/$', DashboardView, name= 'dashboard' ),
 
-	# url(r'^/logout/$', 'django.contrib.auth.views.logout',{'next_page': '/accounts/login'})
+	url(r'^logout/$', LogoutView, name='name'),
 
-	# url(r'^settings/$', AccountDetailView, name='settings'),
+	url(r'^settings/$', AccountDetailView, name='settings'),
 
-	# url(r'^passwordChange/$', PasswordChangeView, name='passwordChange'),
+	url(r'^passwordChange/$', PasswordChangeView, name='passwordChange'),
 
 	url(r'^logout/$', LogoutView, name='logout'),
 

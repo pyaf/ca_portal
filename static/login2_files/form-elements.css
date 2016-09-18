@@ -3,7 +3,7 @@ input[type="text"],
 input[type="password"], 
 textarea, 
 textarea.form-control {
-	height: 50px;
+    height: 50px;
     margin: 0;
     padding: 0 20px;
     vertical-align: middle;
@@ -21,17 +21,17 @@ textarea.form-control {
 
 textarea, 
 textarea.form-control {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	line-height: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 30px;
 }
 
 input[type="text"]:focus, 
 input[type="password"]:focus, 
 textarea:focus, 
 textarea.form-control:focus {
-	outline: 0;
-	background: #fff;
+    outline: 0;
+    background: #fff;
     border: 3px solid #ccc;
     -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none;
 }
@@ -48,7 +48,7 @@ textarea::-webkit-input-placeholder, textarea.form-control::-webkit-input-placeh
 
 
 button.btn {
-	height: 50px;
+    height: 50px;
     margin: 0;
     padding: 0 20px;
     vertical-align: middle;
@@ -72,3 +72,34 @@ button.btn:active { outline: 0; opacity: 0.6; color: #fff; -moz-box-shadow: none
 button.btn:focus { outline: 0; opacity: 0.6; background: #19b9e7; color: #fff; }
 
 button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; background: #19b9e7; color: #fff; }
+
+
+
+.alert-message
+{
+    color: #8a6d3b;
+    background-color: #ffc6c6;
+    border-color: #faebcc;
+        padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.close-btn
+{
+    float: right;
+    opacity: 1;
+    border: none;
+    background-color: #ffc6c6;
+}
+/* ksklksdlksdlsdlk  */
+#btn-next1
+{
+    visibility: hidden;
+}
+ 
+
+ button.page-2
+ {
+    float: right;
+ }

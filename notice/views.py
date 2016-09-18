@@ -22,6 +22,7 @@ def NoticeBooleanUpdate(request):
             json.dumps({"nothing to see":"this is not working"}),
             content_type = "application/json"
         )
+        
 @login_required(login_url = "/login")
 def NotificationsView(request):
     template_name = 'ca/notifications.html'

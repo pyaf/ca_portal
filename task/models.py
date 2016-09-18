@@ -66,9 +66,3 @@ class FbConnect(models.Model):
     uid = models.CharField(max_length = 150,null = True, blank = True)
     def __unicode__(self):
         return self.uid
-
-class ForgotPass(models.Model):
-    ca = models.OneToOneField(CAProfile)
-    key = models.CharField(max_length = 250)
-    def __unicode__(self):
-        return self.ca
