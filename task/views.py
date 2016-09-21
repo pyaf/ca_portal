@@ -241,7 +241,7 @@ def forgotPassword(request):
             user = user.objects.get(email = email)
         except:
             messages.warning(request,"Invalid Email!")
-            return HttpResponse("Invalid Email")
+            return redirect('/')
         try:
             forgotPass = ForgotPass.objects.get(ca = user.caprofile)
             forgotPass.key = key
