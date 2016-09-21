@@ -202,6 +202,7 @@ def fbConnect(request):
         taskInstance.save()
         return JsonResponse(response)
 
+
 def send_email(user, pwd, recipient, subject, body):
     import smtplib
 
@@ -210,6 +211,7 @@ def send_email(user, pwd, recipient, subject, body):
     FROM = user
     TO = recipient if type(recipient) is list else [recipient]
     SUBJECT = subject
+
     TEXT = body
 
     # Prepare actual message
@@ -237,7 +239,8 @@ def forgotPassword(request):
         key = 'Technex'+email+"caportal"
         key = str(hash(key))
         try:
-            user = user.objects.get(email = email)
+            user = User.objects.get(email = email)
+
         except:
             messages.warning(request,"Invalid Email!")
             return redirect('/')
