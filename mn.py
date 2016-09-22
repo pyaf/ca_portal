@@ -19,7 +19,7 @@ if flag == 'y':
     for i in range(0,user_count):
         ca = CAProfile.objects.all()[i]
         UserNotification.objects.create(ca=ca,message=mn)
-        print 'CA ' str(i) + ' sent!'
+        print 'CA ' + str(i) + ' sent!'
 
 else:
     print 'Abort\n'

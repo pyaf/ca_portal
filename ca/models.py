@@ -8,6 +8,7 @@ from django.core.validators import URLValidator
 # from TechnexUser.models import College,year_choices
 
 year_choices = [
+        (None,'Year of study'),
         (1, 'First'),
         (2, 'Second'),
         (3, 'Third'),

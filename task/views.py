@@ -50,13 +50,14 @@ def submitStudentBodyDetail(request):
 	if request.method == 'POST':
 		post = request.POST
 		form = StudentBodyDetailForm(post)
+		ca = request.user.caprofile
 		if form.is_valid():
 			try:
-				studentBodyDetail = StudentBodyDetail.objects.get(ca = request.user.caprofile)
+				studentBodyDetail = StudentBodyDetail.objects.get(ca = ca)
 				studentBodyDetail.studentBodyDetail = post.get('studentBodyDetail')
 			except:
-				studentBodyDetail = StudentBodyDetail(ca = request.user.caprofile, studentBodyDetail = post.get('studentBodyDetail'))
-			taskInstance = TaskInstance.objects.get(task__taskName = 'Student Body Head Details', ca = request.user.caprofile)
+				studentBodyDetail = StudentBodyDetail(ca = ca, studentBodyDetail = post.get('studentBodyDetail'))
+			taskInstance = TaskInstance.objects.get(task__taskName = 'Student Body Head Details', ca = ca)
 			taskInstance.status = 100
 			studentBodyDetail.save()
 			taskInstance.save()

@@ -176,8 +176,39 @@ def DashboardView(request):
 @login_required(login_url = "/login")
 def AccountDetailView(request):
     template_name = 'ca/settings.html'
+    ca = request.user.caprofile
     context = context_call(request)
+    data = {
+        'name': request.user.first_name,
+        'year': ca.year,
+        'mobile_number' : ca.mobile_number,
+        'whatsapp_number' : ca.whatsapp_number,
+        'postal_address' : ca.postal_address,
+        'pincode' : ca.pinCode
+    }
+    context['profileForm'] = ProfileUpdateForm(initial=data)
+    if request.method == "POST":
+        post = request.POST
+        form = ProfileUpdateForm(request.POST)
+        if form.is_valid():
+            request.user.first_name = post.get('name')
+            request.user.save()
+            ca.year = post.get('year')
+            ca.mobile_number = post.get('mobile_number')
+            ca.whatsapp_number = post.get('whatsapp_number')
+            ca.postal_address = post.get('postal_address')
+            ca.pinCode = post.get('pincode')
+            ca.save()
+            messages.success(request,'Profile updated successfully!',fail_silently=True)
+            return redirect('/settings')
+        else:
+            messages.warning(request,'Invalid input!',fail_silently=True)
+
+
     return render(request, template_name, context)
+
+
+
 
 @login_required(login_url = "/login")
 def PasswordChangeView(request):

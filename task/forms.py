@@ -14,3 +14,11 @@ class StudentBodyDetailForm(forms.ModelForm):
     class Meta:
         model = StudentBodyDetail
         exclude = ['ca']
+
+
+class ImageUploadForm(forms.ModelForm):
+    poster = forms.ImageField(widget=forms.FileInput)
+
+    class Meta:
+        model = Poster
+        fields = ['poster']
