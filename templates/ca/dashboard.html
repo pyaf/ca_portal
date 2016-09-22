@@ -192,6 +192,14 @@
     </div>
 
      <div class="col-md-5" id="banner">
+       {% if messages %}
+     {% for msg in messages %}
+         <div class="alert alert-{{msg.tags}}">
+     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+     {{msg}}
+       </div>
+     {% endfor %}
+     {% endif %}
        <img src="/static/dashboard_files/technex_init_banner.jpg"/>
      </div>
 

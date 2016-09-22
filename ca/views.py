@@ -225,18 +225,21 @@ def PasswordChangeView(request):
             password2 = post.get('password2')
             if password1 == password2 :
                 user = authenticate(username=request.user.email,password=oldPassword)
+                print user,oldPassword
                 if user is not None:
                     request.user.set_password(password1)
                     request.user.save()
+                    user = authenticate(username=request.user.email,password=password1)
+                    login(request,user)
                     messages.success(request,'Password successfully set!',fail_silently=True)
-                    return redirect('/')
+                    return redirect('/dashboard')
                 else:
                     messages.warning(request,'Wrong old password!',fail_silently=True)
-                    return render(request,template_name,context)
+                    return redirect('/passwordChange')
 
             else:
                 messages.warning(request,"Passwords didn't match!!",fail_silently=True)
-                return render(request,template_name,context)
+                return redirect('/passwordChange')
     else:
         return render(request, template_name, context)
 
