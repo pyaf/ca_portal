@@ -18,6 +18,30 @@
       </head>
   <body>
     <!-- dsbhidbisbidswbiw -->
+    <div class="modal fade" id="leaderboard-modal" role="dialog">
+      <div class="modal-dialog" id="leaderboard-modal">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">LEADERBOARD</h4>
+          </div>
+          <div class="modal-body" id="leaderboard-modal-body">
+            <p>
+              Leaderboard <b>CUMMING</b> soon
+              <span class="pull-right">
+
+              </span> </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+           </div>
+      </div>
+
 
   <!-- Modal -->
   <div class="modal fade" id="notify-all-modal" role="dialog">
@@ -27,7 +51,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">NOATIFICATIONS</h4>
+          <h4 class="modal-title">NOTIFICATIONS</h4>
         </div>
         <div class="modal-body" id="notify-all-modal-body">
         {% for msg in all_user_msgs %}
@@ -151,7 +175,7 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="menu nav navbar-nav pull-right list-inline">
                             <li>
-                            <a href="#" id="leaderboard"><i class="fa fa-list-ol"></i> Leaderboard</a>
+                            <a href="#" data-target="#leaderboard-modal" data-toggle="modal" id="leaderboard"><i class="fa fa-list-ol"></i> Leaderboard</a>
                             </li>
 
                             <li>
@@ -181,7 +205,7 @@
              {% if taskInstance.status == 100 %}
              <i class="fa fa-check" aria-hidden="true"></i>
              {% else %}
-             <i class="fa fa-times" aria-hidden="true"></i>             
+             <i class="fa fa-times" aria-hidden="true"></i>
              {% endif %}
            </span>
              <div class="progress progress-striped">

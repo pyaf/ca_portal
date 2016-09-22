@@ -19,7 +19,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 </style>
  </head>
-  <body>
+  <body style="padding-bottom: 10px">
 
     <nav id="accordion" class="navbar navbar-default navbar-fixed-top">
             <div class="container">
@@ -80,7 +80,7 @@ input[type=number]::-webkit-outer-spin-button {
       </div>
     </div>
 
-      <div class="col-md-7">
+      <div class="col-md-7" id="details-table">
         {% if messages %}
       {% for msg in messages %}
           <div class="alert alert-{{msg.tags}}">
@@ -89,8 +89,8 @@ input[type=number]::-webkit-outer-spin-button {
         </div>
       {% endfor %}
       {% endif %}
-        <h3>Account Details:</h3>
-          <table class="table table-hover tabel-responsive">
+          <table class="table table-hover tabel-responsive" >
+            <h3>Account Details :</h3>
               <tr>
                 <td>Name :</td>
                 <td>{{request.user.first_name}} {{request.user.last_name}}</td>
@@ -124,9 +124,12 @@ input[type=number]::-webkit-outer-spin-button {
                 <td>{{caprofile.pinCode}}</td>
               </tr>
           </table>
-          <a href="#" type="button" name="button" class="btn btn-default "> Edit profile</a>
-          <br> <br>
-          <form action="" method="POST">
+          <a href="#" type="button" name="button" class="btn btn-default " id="edit-profile-btn"> Edit profile</a>
+</div>
+<div class="col-md-7" id="update-form" style="display: none">
+
+            <form action="" method="POST" >
+            <h3>Update Account Details:</h3>
         {%csrf_token%}
             <table class="table table-hover tabel-responsive">
             {% for field in profileForm %}
@@ -137,6 +140,7 @@ input[type=number]::-webkit-outer-spin-button {
             {%endfor%}
           </table>
           <button type="submit" class="btn btn-default">Update</button>
+          <button type="button" class="btn btn-danger" style="margin-left:10px" id="close-update">Cancel</button>
         </form>
       </div>
       </div>
@@ -145,6 +149,7 @@ input[type=number]::-webkit-outer-spin-button {
 
         <!-- Javascript -->
         <script src="/static/dashboard_files/1.11.3jquery.min.js"></script>
+        <script src="/static/js/settings-script.js" charset="utf-8"></script>
         <script src="/static/dashboard_files/bootstrap.min.js"></script>
 
 </body>
