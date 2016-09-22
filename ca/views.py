@@ -97,7 +97,6 @@ def LoginView(request):
         if user is not None:
             login(request,user)
             return redirect('/dashboard')
-            # return render(request,'ca/thanks.html'{})
         else:
             messages.error(request,'Invalid Credentials',fail_silently=True)
             return render(request,template_name,{})

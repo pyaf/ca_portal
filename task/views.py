@@ -26,19 +26,22 @@ def submitDirectorDetail(request):
 	if request.method == 'POST':
 		post = request.POST
 		form = DirectorDetailForm(post)
-		if form.is_valid():
-			try:
-				directorDetail = DirectorDetail.objects.get(ca = request.user.caprofile)
-				directorDetail.directorDetail = post.get('directorDetail')
-			except:
-				directorDetail = DirectorDetail(ca = request.user.caprofile, directorDetail = post.get('directorDetail'))
-			taskInstance = TaskInstance.objects.get(task__taskName = 'Director Contact Details', ca = request.user.caprofile)
-			taskInstance.status = 100
-			directorDetail.save()
-			taskInstance.save()
-			response['status'] = 'OK'
+		dd = post.get('directorDetail')
+		try:
+			directorDetail = DirectorDetail.objects.get(ca = request.user.caprofile)
+			directorDetail.directorDetail = dd
+		except:
+			directorDetail = DirectorDetail(ca = request.user.caprofile, directorDetail = dd)
+		taskInstance = TaskInstance.objects.get(task__taskName = 'Director Contact Details', ca = request.user.caprofile)
+
+		if dd == '':
+			taskInstance.status = 0
 		else:
-			response['status'] = 'Form Not valid'
+			taskInstance.status = 100
+
+		directorDetail.save()
+		taskInstance.save()
+		response['status'] = 'OK'
 	else:
 		response['status'] = 'Invalid request'
 	return JsonResponse(response)
@@ -51,19 +54,23 @@ def submitStudentBodyDetail(request):
 		post = request.POST
 		form = StudentBodyDetailForm(post)
 		ca = request.user.caprofile
-		if form.is_valid():
-			try:
-				studentBodyDetail = StudentBodyDetail.objects.get(ca = ca)
-				studentBodyDetail.studentBodyDetail = post.get('studentBodyDetail')
-			except:
-				studentBodyDetail = StudentBodyDetail(ca = ca, studentBodyDetail = post.get('studentBodyDetail'))
-			taskInstance = TaskInstance.objects.get(task__taskName = 'Student Body Head Details', ca = ca)
-			taskInstance.status = 100
-			studentBodyDetail.save()
-			taskInstance.save()
-			response['status'] = 'OK'
+		sbd = post.get('studentBodyDetail')
+		try:
+			studentBodyDetail = StudentBodyDetail.objects.get(ca = ca)
+			studentBodyDetail.studentBodyDetail = sbd
+		except:
+			studentBodyDetail = StudentBodyDetail(ca = ca, studentBodyDetail = sbd)
+		taskInstance = TaskInstance.objects.get(task__taskName = 'Student Body Head Details', ca = ca)
+
+		if sbd == '':
+			taskInstance.status = 0
 		else:
-			response['status'] = 'Form Not valid'
+			taskInstance.status = 100
+
+		studentBodyDetail.save()
+		taskInstance.save()
+		response['status'] = 'OK'
+
 	else:
 		response['status'] = 'Invalid request'
 	return JsonResponse(response)
