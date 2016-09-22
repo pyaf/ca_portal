@@ -47,18 +47,6 @@ class Poster(models.Model):
     def __unicode__(self):
         return '%s' % self.poster
 
-# @receiver(post_save, sender=User)
-# def create_profile(sender,created, instance, **kwargs):
-#     if created:
-#         user_profile = UserProfile(user = instance)
-#         user_profile.save()
-
-    # #where to redirect after successful userprofile registration
-    # def get_absolute_url(self):
-    #     return reverse('dashboard',kwargs={'pk':self.pk})
-    # or
-    # def get_absolute_url(self):
-    #     return u'/some_url/%d' % self.id
 
 class FbConnect(models.Model):
     ca = models.ForeignKey(CAProfile)
@@ -70,5 +58,13 @@ class FbConnect(models.Model):
 class ForgotPass(models.Model):
     ca = models.OneToOneField(CAProfile)
     key = models.CharField(max_length = 250)
+    def __unicode__(self):
+        return self.ca
+
+class Key(models.Model):
+    ca = models.OneToOneField(CAProfile)
+    forgotPassKey = models.CharField(max_length=250)
+    confirmationKey = models.CharField(max_length=250)
+
     def __unicode__(self):
         return self.ca

@@ -166,11 +166,18 @@ def FbLogin(request):
 @login_required(login_url='/login')
 def DashboardView(request):
     template_name = 'ca/dashboard.html'
+    ca = request.user.caprofile
     try:
         context = context_call(request)
+        if ca.firstVisit == False: #Visiting first time, let him explore the dashboard
+            context['firstVisit'] = True
+            ca.firstVisit = True
+            ca.save()
         return render(request,template_name,context)
+
     except Exception as e:
         return HttpResponse(e)
+
 
 @login_required(login_url = "/login")
 def AccountDetailView(request):
@@ -205,8 +212,6 @@ def AccountDetailView(request):
 
 
     return render(request, template_name, context)
-
-
 
 
 @login_required(login_url = "/login")

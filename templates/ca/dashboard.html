@@ -9,11 +9,11 @@
 <link rel="stylesheet" href="/static/dashboard_files/style.css">
 <link rel="stylesheet" href="/static/dashboard_files/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
 
-
-<script type="text/javascript" src="/static/dashboard_files/jquery.js"></script>
-<script type="text/javascript" src="/static/dashboard_files/script.js"></script>
-<!-- <link rel="stylesheet" href="/static/css/reset.css"> -->
-<!-- <link rel="stylesheet" href="/static/css/style.css"> -->
+    <script type="text/javascript" src="/static/dashboard_files/jquery.js"></script>
+    {% if firstVisit %}
+    <script type="text/javascript" src="/static/dashboard_files/script.js"></script>
+    {% endif %}
+    <script type="text/javascript" src="/static/dashboard_files/panelscript.js"></script>
 
       </head>
   <body>
@@ -29,7 +29,7 @@
           </div>
           <div class="modal-body" id="leaderboard-modal-body">
             <p>
-              Leaderboard <b>CUMMING</b> soon
+              Leaderboard <b>coming</b> soon!
               <span class="pull-right">
 
               </span> </p>
@@ -81,7 +81,7 @@
           <h4 class="modal-title">TASKS</h4>
         </div>
         <div class="modal-body">
-          <p>YE lo ye kaam karo aur apna chutiya katao</p>
+          <p>Your tasks here!</p>
         </div>
         <div class="modal-footer">
 
@@ -125,7 +125,7 @@
           <h4 class="modal-title">Settings</h4>
         </div>
         <div class="modal-body">
-          <p>Iski madad se hm aapki setting karvayenge....bloddy single</p>
+          <p>Settings</p>
         </div>
         <div class="modal-footer">
 
@@ -147,7 +147,7 @@
           <h4 class="modal-title">Notifications</h4>
         </div>
         <div class="modal-body">
-          <p>yaha bataya jaayega ki hm aapka chutiya kis tarah se kaat re hai</p>
+          <p>Your notification panel!</p>
         </div>
         <div class="modal-footer">
 
@@ -329,6 +329,7 @@
     <script src="/static/dashboard_files/1.11.3jquery.min.js"></script>
     <script src="/static/js/notify.js"></script>
     <script src="/static/dashboard_files/bootstrap.min.js"></script>
+
 
 </body>
 </html>

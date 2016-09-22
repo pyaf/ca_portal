@@ -35,5 +35,8 @@ class CAProfile(models.Model):
     whyChooseYou = models.TextField(blank=True,null=True)
     pastExp = models.TextField(blank=True, null=True)
 
+    regNum = models.IntegerField(null=True,blank=True)
+    firstVisit = models.BooleanField(default=False)
+
     def __unicode__(self):
         return '%s-%s' %(self.user.first_name, self.college)
