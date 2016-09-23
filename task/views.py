@@ -19,61 +19,64 @@ from ca.forms import *
 from ca.models import *
 from task.models import *
 from task.forms import *
+
+
 server = "http://www.ca.technex.in/"
+
 @csrf_exempt
 def submitDirectorDetail(request):
-	response = {}
-	if request.method == 'POST':
-		post = request.POST
-		form = DirectorDetailForm(post)
-		dd = post.get('directorDetail')
-		try:
-			directorDetail = DirectorDetail.objects.get(ca = request.user.caprofile)
-			directorDetail.directorDetail = dd
-		except:
-			directorDetail = DirectorDetail(ca = request.user.caprofile, directorDetail = dd)
-		taskInstance = TaskInstance.objects.get(task__taskName = 'Director Contact Details', ca = request.user.caprofile)
+    response = {}
+    if request.method == 'POST':
+        post = request.POST
+        form = DirectorDetailForm(post)
+        dd = post.get('directorDetail')
+        try:
+            directorDetail = DirectorDetail.objects.get(ca = request.user.caprofile)
+            directorDetail.directorDetail = dd
+        except:
+            directorDetail = DirectorDetail(ca = request.user.caprofile, directorDetail = dd)
+        taskInstance = TaskInstance.objects.get(task__taskName = 'Director Contact Details', ca = request.user.caprofile)
 
-		if dd == '':
-			taskInstance.status = 0
-		else:
-			taskInstance.status = 100
+        if dd == '':
+            taskInstance.status = 0
+        else:
+            taskInstance.status = 100
 
-		directorDetail.save()
-		taskInstance.save()
-		response['status'] = 'OK'
-	else:
-		response['status'] = 'Invalid request'
-	return JsonResponse(response)
+        directorDetail.save()
+        taskInstance.save()
+        response['status'] = 'OK'
+    else:
+        response['status'] = 'Invalid request'
+    return JsonResponse(response)
 
 
 @csrf_exempt
 def submitStudentBodyDetail(request):
-	response = {}
-	if request.method == 'POST':
-		post = request.POST
-		form = StudentBodyDetailForm(post)
-		ca = request.user.caprofile
-		sbd = post.get('studentBodyDetail')
-		try:
-			studentBodyDetail = StudentBodyDetail.objects.get(ca = ca)
-			studentBodyDetail.studentBodyDetail = sbd
-		except:
-			studentBodyDetail = StudentBodyDetail(ca = ca, studentBodyDetail = sbd)
-		taskInstance = TaskInstance.objects.get(task__taskName = 'Student Body Head Details', ca = ca)
+    response = {}
+    if request.method == 'POST':
+        post = request.POST
+        form = StudentBodyDetailForm(post)
+        ca = request.user.caprofile
+        sbd = post.get('studentBodyDetail')
+        try:
+            studentBodyDetail = StudentBodyDetail.objects.get(ca = ca)
+            studentBodyDetail.studentBodyDetail = sbd
+        except:
+            studentBodyDetail = StudentBodyDetail(ca = ca, studentBodyDetail = sbd)
+        taskInstance = TaskInstance.objects.get(task__taskName = 'Student Body Head Details', ca = ca)
 
-		if sbd == '':
-			taskInstance.status = 0
-		else:
-			taskInstance.status = 100
+        if sbd == '':
+            taskInstance.status = 0
+        else:
+            taskInstance.status = 100
 
-		studentBodyDetail.save()
-		taskInstance.save()
-		response['status'] = 'OK'
+        studentBodyDetail.save()
+        taskInstance.save()
+        response['status'] = 'OK'
 
-	else:
-		response['status'] = 'Invalid request'
-	return JsonResponse(response)
+    else:
+        response['status'] = 'Invalid request'
+    return JsonResponse(response)
 
 @login_required(login_url = "/login")
 def AllPosterView(request):
@@ -212,7 +215,7 @@ def fbConnect(request):
 
 
 def send_email(recipient, subject, body):
-    
+
     return requests.post(
         "https://api.mailgun.net/v3/mg.technex.in/messages",
         auth=("api", "key-cf7f06e72c36031b0097128c90ee896a"),
@@ -220,42 +223,49 @@ def send_email(recipient, subject, body):
               "to": recipient,
               "subject": subject,
               "text": body})
+
 @csrf_exempt
 def forgotPassword(request):
     if request.method == 'POST':
-        post = request.POST
-        email = post.get("form-email")
-        subject = "Reset Password"
-        key = 'Technex'+email+"caportal"
-        key = str(hash(key))
+        email = request.POST.get("form-email")
+
         try:
             user = User.objects.get(email = email)
-
+            if user.is_active is False:
+                messages.warning(request,"Please confirm your email first!")
+                return redirect('/login')
         except:
             messages.warning(request,"Invalid Email!")
             return redirect('/login')
+
+        subject = "Reset Password"
+        forgotPassKey = 'Technex' + email + "caportal"
+        forgotPassKey = str(hash(forgotPassKey))
+
         try:
-            forgotPass = ForgotPass.objects.get(ca = user.caprofile)
-            forgotPass.key = key
-            forgotPass.save()
+            key = Key.objects.get(ca = user.caprofile)
+            key.forgotPassKey = forgotPassKey
+            key.save()
         except:
-            forgotPass = ForgotPass(ca= user.caprofile,key = key)
-            forgotPass.save()
-        body = "Please Cick on the following link to reset your Password.\n\n"
-        body += server+"resetPass/"+key
-        if send_email(email,subject,body):
+            key = Key(ca = user.caprofile,forgotPassKey = forgotPassKey)
+            key.save()
+
+        body = "Please Cick on the following link to reset your Technex CA Portal Password.\n\n"
+        body += server + "resetPass/" + forgotPassKey
+
+        if send_email(email, subject, body):
             messages.success(request, "Password Reset link sent to your Email.")
             return redirect('/login')
         else:
-            messages.warning(request, "Email couldn't  be send !!")
-
+            messages.warning(request, "Email couldn't  be send, Retry please!")
+    else:
+		raise Http404('NOT ALLOWED')
 @csrf_exempt
-def resetPass(request,key):
+def resetPass(request,forgotPassKey):
     if request.method == 'GET':
 
         try:
-            forgotPass = ForgotPass.objects.get(key = int(key))
-            
+            key = Key.objects.get(forgotPassKey = int(forgotPassKey))
             return render(request,"ca/reset.html")
         except:
             messages.warning(request,'Invalid Url !')
@@ -264,22 +274,21 @@ def resetPass(request,key):
     elif request.method == "POST":
         post = request.POST
         try:
-            forgotPass = ForgotPass.objects.get(key=key)
-            caprofile = forgotPass.ca
+            key = Key.objects.get(forgotPassKey=forgotPassKey)
+            caprofile = key.ca
             password1 = post.get('form-password')
             password2 = post.get('form-repeat-password')
             if password1 == password2:
-                forgotPass.delete()
                 caprofile.user.set_password(password1)
                 caprofile.user.save()
                 messages.success(request,'password set successfully!',fail_silently=True)
                 return redirect('/login')
             else:
                 messages.warning(request,"passwords didn't match!")
-                url = server+"/resetPass/"+key
-                return redirect(request,url)
+                url = server + "/resetPass/" + key
+                return redirect(request, url)
         except:
             raise Http404('Not allowed')
 
 
-        return redirect('/resetPass/'+key)
+        # return redirect('/resetPass/'+key)

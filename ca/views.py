@@ -12,10 +12,16 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 import requests, json, facebook, re
-from ca.forms import *
+
 from ca.models import *
 from task.models import *
+from notice.models import *
+from ca.forms import *
 from task.forms import *
+from ca.backend import PasswordlessAuthBackend
+from task.views import send_email
+
+server = "http://www.ca.technex.in/"
 
 def context_call(request):
     # college = request.user.caprofile.college
@@ -95,8 +101,14 @@ def LoginView(request):
         password = post['password']
         user = authenticate(username=email, email=email, password=password)
         if user is not None:
-            login(request,user)
-            return redirect('/dashboard')
+
+            if user.is_active:
+                login(request,user)
+                return redirect('/dashboard')
+
+            else:
+                messages.warning(request, "Please Confirm your email before logging in, for email confirmation check your email.", fail_silently=True)
+                return redirect('/login')
         else:
             messages.error(request,'Invalid Credentials',fail_silently=True)
             return render(request,template_name,{})
@@ -122,6 +134,9 @@ def CARegistrationView(request):
             user = User.objects.create_user(username=email,email=email)
             user.first_name = post.get('form-first-name')
             user.set_password(password1)
+
+            user.is_active = False #to be True after email confirmation
+
             user.save()
 
             caprofile = CAProfile.objects.create(user=user)
@@ -139,26 +154,73 @@ def CARegistrationView(request):
             caprofile.whyChooseYou = post.get('form-choose')
             caprofile.pastExp = post.get('form-experiences')
             caprofile.save()
-            SheetUpdate(caprofile)
+            # SheetUpdate(caprofile)
+
+            #Create task instances
             tasks = Task.objects.all()
             for task in tasks:
                 taskInstance = TaskInstance(task = task, ca = caprofile)
                 taskInstance.save()
-            # UserNotification.objects.create(ca=caprofile,message)
-            new_user = authenticate(username=email,password=password1)
-            login(request,new_user)
 
-            return redirect('/dashboard')
-            # return render(request,'ca/dashboard.html',{})
+            message = "Welcome to Campus Ambassador Portal of Technex'17"
+            UserNotification.objects.create(ca=caprofile,message=message)
+
+            subject = "Email Confirmation for Technex CA Portal"
+            confirmationKey = 'Technex' + email + "caportal"
+            confirmationKey = str(hash(confirmationKey))
+
+            try:
+                key = Key.objects.get(ca = user.caprofile)
+                key.confirmationKey = confirmationKey
+                key.save()
+            except:
+                key = Key(ca = user.caprofile, confirmationKey = confirmationKey)
+                key.save()
+
+            body = "Please Cick on the following link to Confirm your Technex CA Portal Email.\n\n"
+            body += server + "confirmEmail/" + confirmationKey
+
+            if send_email(email, subject, body):
+                messages.success(request, 'Confirmation mail sent!, Please check your mail.', fail_silently=True)
+                return redirect('/register')
+            else:
+                message.warning(request, 'Email Confirmation link can\'n be sent please try to register again.', fail_silently=True)
+                return render(request,template_name,context)
+
         else:# already a user.
 
-            messages.warning(request,'email already registered!, if you have already registered for Technex, the link of CA registration is at dashboard',fail_silently=True)
+            messages.warning(request, "email already registered!, Please click on 'forgot password' on login page.", fail_silently=True)
             return render(request,template_name,context)
-
 
     else:
         return render(request,template_name,context)
 
+@csrf_exempt
+def confirmEmail(request,confirmationKey):
+    if request.method == 'GET':
+        try:
+            key = Key.objects.get(confirmationKey = int(confirmationKey))
+            return render(request,"ca/emailConfirm.html")
+        except:
+            messages.warning(request,'Invalid Url !')
+            return redirect('/login')
+
+    elif request.method == "POST":
+        post = request.POST
+        try:
+            key = Key.objects.get(confirmationKey=confirmationKey)
+            caprofile = key.ca
+            caprofile.user.is_active = True
+            caprofile.user.save()
+            try:
+                user = PasswordlessAuthBackend().authenticate(username=caprofile.user.email)
+                user.backend = 'ca.backend.PasswordlessAuthBackend'
+                login(request,user)
+                return redirect('/dashboard')
+            except Exception as e:
+                return HttpResponse(e)
+        except:
+            raise Http404('Not allowed')
 
 def FbLogin(request):
     pass

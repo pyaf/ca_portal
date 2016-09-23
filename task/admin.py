@@ -20,4 +20,4 @@ admin.site.register(StudentBodyDetail)
 admin.site.register(Poster, PosterAdmin)
 
 admin.site.register(FbConnect)
-admin.site.register(ForgotPass)
+admin.site.register(Key)

@@ -25,5 +25,5 @@ urlpatterns = [
 	 url(r'^demofb_id/$', demofb_id, name='demofb_id'),
 	 url(r'^fbConnect/$', fbConnect, name='fbConnect'),
 	 url(r'^forgotPass/$', forgotPassword, name='forgotPassword'),
-	 url(r'^resetPass/(?P<key>[\w\-]+)/$', resetPass, name='resetPass'),
+	 url(r'^resetPass/(?P<forgotPassKey>[\w\-]+)/$', resetPass, name='resetPass'),
 ]

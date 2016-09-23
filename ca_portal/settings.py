@@ -77,6 +77,8 @@ AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin and to ensure compatibility with other packages
     'django.contrib.auth.backends.ModelBackend',
 
+    'ca.backend.PasswordlessAuthBackend',
+
 ]
 
 # Database

@@ -14,6 +14,8 @@ urlpatterns = [
 
 	url(r'^register/$', CARegistrationView, name= 'register' ),
 
+	url(r'^confirmEmail/(?P<confirmationKey>[\w\-]+)/$', confirmEmail, name='confirmEmail'),
+
 	# url(r'^fblogin/$', FbLogin, name= 'fblogin' ),
 
 	#dashboard
