@@ -89,7 +89,7 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Enter your email to reset your password</h4>
         </div>
-                            <form role="form" action="/forgotPass/" method="post" class="reset-password-form">
+                            <form role="form" action="" method="get" class="reset-password-form">
                                     
                                     <div class="form-bottom">
                                         

@@ -19,7 +19,7 @@ from ca.forms import *
 from ca.models import *
 from task.models import *
 from task.forms import *
-
+server = "http://www.ca.technex.in/"
 @csrf_exempt
 def submitDirectorDetail(request):
 	response = {}
@@ -211,38 +211,20 @@ def fbConnect(request):
         return JsonResponse(response)
 
 
-def send_email(user, pwd, recipient, subject, body):
-    import smtplib
-
-    gmail_user = user
-    gmail_pwd = pwd
-    FROM = user
-    TO = recipient if type(recipient) is list else [recipient]
-    SUBJECT = subject
-
-    TEXT = body
-
-    # Prepare actual message
-    message = """From: %s\nTo: %s\nSubject: %s\n\n%s
-    """ % (FROM, ", ".join(TO), SUBJECT, TEXT)
-    try:
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.ehlo()
-        server.starttls()
-        server.login(gmail_user, gmail_pwd)
-        server.sendmail(FROM, TO, message)
-        server.close()
-        return True
-    except:
-        return False
-
+def send_email(recipient, subject, body):
+    
+    return requests.post(
+        "https://api.mailgun.net/v3/mg.technex.in/messages",
+        auth=("api", "key-cf7f06e72c36031b0097128c90ee896a"),
+        data={"from": "No-reply <mailgun@mg.technex.in>",
+              "to": recipient,
+              "subject": subject,
+              "text": body})
 @csrf_exempt
 def forgotPassword(request):
     if request.method == 'POST':
         post = request.POST
-        email = post.get("email")
-        user = "bikram.bharti.1998@gmail.com"
-        pwd = "caportal"
+        email = post.get("form-email")
         subject = "Reset Password"
         key = 'Technex'+email+"caportal"
         key = str(hash(key))
@@ -251,45 +233,51 @@ def forgotPassword(request):
 
         except:
             messages.warning(request,"Invalid Email!")
-            return redirect('/')
+            return redirect('/login')
         try:
             forgotPass = ForgotPass.objects.get(ca = user.caprofile)
             forgotPass.key = key
             forgotPass.save()
         except:
-            forgotPass = ForgotPass(ca= request.user.caprofile,key = key)
+            forgotPass = ForgotPass(ca= user.caprofile,key = key)
             forgotPass.save()
         body = "Please Cick on the following link to reset your Password.\n\n"
-        body += "http://locahost:8000/resetPass/"+key
-        if send_email(user,pwd,email,subject,body):
-            return HttpResponse("mail sent")
+        body += server+"resetPass/"+key
+        if send_email(email,subject,body):
+            messages.success(request, "Password Reset link sent to your Email.")
+            return redirect('/login')
         else:
-            return HttpResponse("Invalid Email")
+            messages.warning(request, "Email couldn't  be send !!")
 
 @csrf_exempt
 def resetPass(request,key):
     if request.method == 'GET':
 
-        try:
-            forgotPass = ForgotPass.objects.get(key = key)
-            return render(request,template_name,context)
-        except:
-            return HttpResponse("Invalid Key")
+        if True:
+            forgotPass = ForgotPass.objects.get(key = int(key))
+            print key
+            return render(request,"ca/reset.html")
+        else:
+            messages.warning(request,'Invalid Url !')
+            return redirect('/login')
 
     elif request.method == "POST":
         post = request.POST
         try:
             forgotPass = ForgotPass.objects.get(key=key)
-            caprofile = forgotPass.caprofile
-            password1 = post.get('password1')
-            password2 = post.get('password2')
+            caprofile = forgotPass.ca
+            password1 = post.get('form-password')
+            password2 = post.get('form-repeat-password')
             if password1 == password2:
+                forgotPass.delete()
                 caprofile.user.set_password(password1)
                 caprofile.user.save()
                 messages.success(request,'password set successfully!',fail_silently=True)
-                return redirect('/')
+                return redirect('/login')
             else:
                 messages.warning(request,"passwords didn't match!")
+                url = server+"/resetPass/"+key
+                return redirect(request,url)
         except:
             raise Http404('Not allowed')
 

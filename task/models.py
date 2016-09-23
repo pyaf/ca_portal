@@ -59,8 +59,8 @@ class ForgotPass(models.Model):
     ca = models.OneToOneField(CAProfile)
     key = models.CharField(max_length = 250)
     def __unicode__(self):
-        return self.ca
-
+        return self.key
+'''
 class Key(models.Model):
     ca = models.OneToOneField(CAProfile)
     forgotPassKey = models.CharField(max_length=250)
@@ -68,3 +68,4 @@ class Key(models.Model):
 
     def __unicode__(self):
         return self.ca
+'''
