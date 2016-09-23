@@ -253,11 +253,11 @@ def forgotPassword(request):
 def resetPass(request,key):
     if request.method == 'GET':
 
-        if True:
+        try:
             forgotPass = ForgotPass.objects.get(key = int(key))
-            print key
+            
             return render(request,"ca/reset.html")
-        else:
+        except:
             messages.warning(request,'Invalid Url !')
             return redirect('/login')
 
