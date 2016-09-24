@@ -23,6 +23,16 @@ from task.forms import *
 
 server = "http://www.ca.technex.in/"
 
+def send_email(recipient, subject, body):
+
+    return requests.post(
+        "https://api.mailgun.net/v3/mg.technex.in/messages",
+        auth=("api", "key-cf7f06e72c36031b0097128c90ee896a"),
+        data={"from": "No-reply <mailgun@mg.technex.in>",
+              "to": recipient,
+              "subject": subject,
+              "text": body})
+
 @csrf_exempt
 def submitDirectorDetail(request):
     response = {}
@@ -213,16 +223,6 @@ def fbConnect(request):
         taskInstance.save()
         return JsonResponse(response)
 
-
-def send_email(recipient, subject, body):
-
-    return requests.post(
-        "https://api.mailgun.net/v3/mg.technex.in/messages",
-        auth=("api", "key-cf7f06e72c36031b0097128c90ee896a"),
-        data={"from": "No-reply <mailgun@mg.technex.in>",
-              "to": recipient,
-              "subject": subject,
-              "text": body})
 
 @csrf_exempt
 def forgotPassword(request):

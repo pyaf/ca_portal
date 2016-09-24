@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-
 from django.db import models
 
 from ca.models import CAProfile
@@ -16,8 +15,9 @@ class TaskInstance(models.Model):
     task = models.ForeignKey(Task)
     ca = models.ForeignKey(CAProfile)
     status = models.SmallIntegerField(default = 0) #Added this field to show partial completion(0-10) of work
+
     def __unicode__(self):
-        return '%s'%self.status
+        return '%s - %s - %s'%(self.ca.user.email, self.task, self.status)
 
 class DirectorDetail(models.Model):
     directorDetail = models.TextField() #dd = BooleanField for directorDetail
