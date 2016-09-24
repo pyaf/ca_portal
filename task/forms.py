@@ -3,6 +3,9 @@ from task.models import *
 
 
 class DirectorDetailForm(forms.ModelForm):
+    directorDetail = forms.CharField(label="Director Detail",
+                               widget=forms.Textarea(attrs={'class': 'form-control','type':'textarea','cols':'30','rows': '5','placeholder':"Provide us contact details of your college's Director."}))
+
 
     class Meta:
         model = DirectorDetail
@@ -10,6 +13,10 @@ class DirectorDetailForm(forms.ModelForm):
 
 
 class StudentBodyDetailForm(forms.ModelForm):
+
+    studentBodyDetail = forms.CharField(label="Student Detail",
+                               widget=forms.Textarea(attrs={'class': 'form-control','type':'textarea','rows': '5','placeholder':"Provide us contact details of your Student body head of your college."}))
+
 
     class Meta:
         model = StudentBodyDetail

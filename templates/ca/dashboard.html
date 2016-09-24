@@ -81,7 +81,8 @@
           <h4 class="modal-title">TASKS</h4>
         </div>
         <div class="modal-body">
-          <p>Your tasks here!</p>
+          <p>Here are your task.</p>
+          <p>Complete them to get points and improve your rank in leaderboard</p>
         </div>
         <div class="modal-footer">
 
@@ -103,7 +104,7 @@
           <h4 class="modal-title">leaderboard</h4>
         </div>
         <div class="modal-body">
-          <p>See your position among all the Campus Ambassadors</p>
+          <p>Here you will see the leaderboard, checkout your rank here among other Campus Ambassadors of Technex'17.</p>
         </div>
         <div class="modal-footer">
 
@@ -125,7 +126,7 @@
           <h4 class="modal-title">Settings</h4>
         </div>
         <div class="modal-body">
-          <p>Settings</p>
+          <p>See your profile details here and edit it if necessary</p>
         </div>
         <div class="modal-footer">
 
@@ -147,7 +148,7 @@
           <h4 class="modal-title">Notifications</h4>
         </div>
         <div class="modal-body">
-          <p>Your notification panel!</p>
+          <p>Here you will see notifications of various upcoming events, updates and deadlines to let you stay technexed!  </p>
         </div>
         <div class="modal-footer">
 
@@ -191,9 +192,9 @@
         </nav>
 
 <div class="content">
-  <div class="container">
+  <div class="container" >
       <div class="row">
-  <div class="col-md-3">
+  <div class="col-md-3" style="width:310px">
 
     <div class="panel panel-default" id="task-panel">
       <div class="panel-heading"><strong>Tasks</strong></div>
@@ -229,20 +230,18 @@
        <img src="/static/dashboard_files/technex_init_banner.jpg"/>
      </div>
 
-      <div class="col-md-5 dial" id="1">
+      <div class="col-md-5 dial" id="16">
           <div class="well bs-component live-less-editor-hovercontainer" data-relatedvars="legend-color,legend-border-color,input-color,input-height-base,input-bg,input-border,input-border-radius,input-border-focus,input-color-placeholder,input-bg-disabled,input-height-small,input-height-large,state-success-text,state-success-bg,state-warning-text,state-warning-bg,state-danger-text,state-danger-bg,input-group-addon-bg,input-group-addon-border-color,input-border-radius-large,input-border-radius-small">
-              <form class="form-horizontal" id="1">
+              <form class="form-horizontal" id="16">
                   <fieldset>
                       <legend>Director Contact Details</legend>
-
                       <div class="form-group">
                           <div class="col-lg-10">
                           {{ddform.directorDetail}}
                           </div>
                       </div>
-
                       <div class="form-group">
-                          <div class="col-lg-10 col-lg-offset-2">
+                          <div class="col-lg-10">
                               <button type="submit" class="btn btn-primary" value="directorDetail" id="/submitDirector/" >Submit</button>
                           </div>
                       </div>
@@ -254,7 +253,7 @@
          </div>
       </div>
 
-      <div class="col-md-5 dial" id="2">
+      <div class="col-md-5 dial" id="17">
           <div class="well bs-component live-less-editor-hovercontainer" data-relatedvars="legend-color,legend-border-color,input-color,input-height-base,input-bg,input-border,input-border-radius,input-border-focus,input-color-placeholder,input-bg-disabled,input-height-small,input-height-large,state-success-text,state-success-bg,state-warning-text,state-warning-bg,state-danger-text,state-danger-bg,input-group-addon-bg,input-group-addon-border-color,input-border-radius-large,input-border-radius-small">
               <form class="form-horizontal" id="2">
                   <fieldset>
@@ -267,7 +266,7 @@
                       </div>
 
                       <div class="form-group">
-                          <div class="col-lg-10 col-lg-offset-2">
+                          <div class="col-lg-10 ">
                               <button type="submit" class="btn btn-primary" value="studentBodyDetail" id="/submitStudentBody/">Submit</button>
                           </div>
                       </div>
@@ -279,18 +278,18 @@
             </div>
       </div>
 
-      <div class="col-md-5 dial" id="3">
-
-        <button onclick="fb_login()" class="btn btn-primary">
-          <i class="fa fa-facebook"> Facebook Connect</i>
-        </button>
+      <div class="col-md-5 dial" id="18">
+            <p >Connect your facebook profile with Technex.This will let us automatically share and like post from our <a href="https://www.facebook.com/Technex/">Technex FB page,</a>. It's a great step for you towards the top of the leaderboard</p>
+            <button onclick="fb_login()" style=""class="center-block btn btn-primary">
+              <i class="fa fa-facebook"> Facebook </i>
+            </button>
       </div>
 
           <!-- <div class="col-md-5 dial" id="fbl">
               FBL
           </div> -->
 
-          <div class="col-lg-4 notification-panel" id="notification-panel">
+          <div class="col-lg-3 notification-panel" id="notification-panel" style="width:370px">
               <div class="panel panel-default">
                   <div class="panel-heading">
                     <strong>Notifications <span class="badge">{{user_msgs.count}}</span>

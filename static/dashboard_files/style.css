@@ -9,7 +9,7 @@ body{
 }
 .dial{
     display: none;
-    color: white;
+    color: black;
     font-size: large;
 }
 #glyfbc{display: none}#glyfbl{display: none}#glydd{display: none}#glysbd{display: none}

@@ -1,8 +1,5 @@
 $(document).ready(function() {
 
-var i=true;
-if(true){
-
 
     $("#startup-task-modal").modal("show");
     $("#accordion").addClass('blurring');
@@ -18,7 +15,7 @@ $("#banner").removeClass('blurring');
  $(".notification-panel").removeClass('blurring');
  $("#settings").removeClass("navbartip");
 $("#Logout").removeClass("navbartip");
-$("#leaderboard").removeClass("navbartip");
+$("#leaderboard").removeClass("navbartip");  
    });
 
 $("#startup-task-next").on("click",function(){
@@ -76,11 +73,56 @@ $("#banner").removeClass('blurring');
  $(".notification-panel").removeClass('blurring');
  $("#settings").removeClass("navbartip");
 $("#Logout").removeClass("navbartip");
-$("#leaderboard").removeClass("navbartip");
-
+$("#leaderboard").removeClass("navbartip");  
+   
    });
 
+
+    $('.tasks a').click(function() {
+        $('#banner').css('display', 'none');
+        var id = $(this).attr('href');
+        $('.dial').css('display', 'none');
+        $(id).css('display', 'block');
+    });
+
+    if( $('#glyddpro')[0].style.width == '100%'){
+        $('#glydd').css('display', 'inline-block');
+    }
+    if( $('#glysbdpro')[0].style.width == '100%'){
+        $('#glysbd').css('display', 'inline-block');
+    }
+    if( $('#glyfbcpro')[0].style.width == '100%'){
+        $('#glyfbc').css('display', 'inline-block');
+    }
+    if( $('#glyfblpro')[0].style.width == '100%'){
+        $('#glyfbl').css('display', 'inline-block');
+    }
+
+
+// sojswbjdwhodwdwhoohidwodheo8yeyedbhbjldwhdwuougodbwbo jwbuodugowubgodw
+
+window.onclick = function(event) {
+   if(event.target == document.getElementById('startup-task-modal') || event.target == document.getElementById('startup-settings-modal') || event.target == document.getElementById('startup-notifications-modal') || event.target == document.getElementById('startup-leaderboard-modal'))
+{
+     $("#accordion").removeClass('blurring');
+    // $("#modal-content").blur();
+    $("#task-panel").removeClass('blurring');
+$("#banner").removeClass('blurring');
+ $(".notification-panel").removeClass('blurring');
+ $("#settings").removeClass("navbartip");
+$("#Logout").removeClass("navbartip");
+$("#leaderboard").removeClass("navbartip");  
+
+    console.log("jdjdjdj");
+}    
 }
+
+
+
+
+
+
+
 
 
 });

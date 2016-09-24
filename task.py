@@ -16,7 +16,7 @@ Task.objects.create(taskName='Student Body Head Details',
                     taskDescription='Provide us the Details of Student Body Head of your college.',
                     deadLine=timezone.now())
 
-Task.objects.create(taskName='facebook connect',
+Task.objects.create(taskName='Facebook connect',
                     taskDescription='Give us the permission to automatically like Technex Facebook Page',
                     deadLine=timezone.now())
 
