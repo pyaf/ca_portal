@@ -37,6 +37,11 @@ class CAProfile(models.Model):
 
     regNum = models.IntegerField(null=True,blank=True)
     firstVisit = models.BooleanField(default=False)
+    isChoosen = models.BooleanField(default=False)
 
     def __unicode__(self):
         return '%s-%s' %(self.user.first_name, self.college)
+
+class LeaderBoard(models.Model):
+    ca = models.OneToOneField(CAProfile)
+    points = models.IntegerField(null=True)

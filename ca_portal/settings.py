@@ -76,7 +76,6 @@ WSGI_APPLICATION = 'ca_portal.wsgi.application'
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin and to ensure compatibility with other packages
     'django.contrib.auth.backends.ModelBackend',
-
     'ca.backend.PasswordlessAuthBackend',
 
 ]
@@ -171,3 +170,7 @@ SOCIALACCOUNT_PROVIDERS = \
         'LOCALE_FUNC': 'path.to.callable',
         'VERIFIED_EMAIL': False,
         'VERSION': 'v2.4'}}
+
+# from django.contrib.auth.models import User
+# User._meta.get_field("username").max_length = 75
+# User._meta.get_field("email").max_length = 75

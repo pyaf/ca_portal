@@ -26,14 +26,14 @@ $('#reset-confirm-password').keyup(function(e){
         {
           $('.alert-confirm-password').hide();
         }
-       
+
     });
 
 
   $("#myModal2").modal('show');
   $('#back').hide();
   $.backstretch("/1.jpg");
-	
+
 $("#new-pass-btn-close").on('click',function(e){
   window.location = "/login";
 });
@@ -60,7 +60,7 @@ $("#new-pass-cross-btn").on('click',function(e){
             });
                                                 if(next)
                                                 {
-                                                next = validatePassword(); 
+                                                next = validatePassword();
                                                 if(!next)
                                                 {
                                                 e.preventDefault();

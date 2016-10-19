@@ -31,7 +31,7 @@ input[type=number]::-webkit-outer-spin-button {
                         <span class="icon-bar"></span>
                     </button>
                     <l class="navbar-brand">
-                      <a href="www.technex.in">
+                      <a href="http://www.technex.in">
                         <div class="tech">
                           <img src="/static/dashboard_files/logo_technex_white_17.png">
                         </div>
@@ -41,9 +41,9 @@ input[type=number]::-webkit-outer-spin-button {
 
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="menu nav navbar-nav pull-right list-inline">
-                            <li>
-                            <a href="#" id="leaderboard"><i class="fa fa-list-ol"></i> Leaderboard</a>
-                            </li>
+                      <li>
+                      <a href="#" data-target="#leaderboard-modal" data-toggle="modal" id="leaderboard"><i class="fa fa-list-ol"></i> Leaderboard</a>
+                      </li>
 
                             <li>
                                 <a href="/dashboard/" id="dashboard"><i class="fa fa-th"></i> Dashboard</a>
@@ -140,7 +140,7 @@ input[type=number]::-webkit-outer-spin-button {
             {%endfor%}
           </table>
           <button type="submit" class="btn btn-default">Update</button>
-          <button class="btn btn-danger" style="margin-left:10px" id="close-update">Cancel</button>
+          <button type="button" class="btn btn-danger" style="margin-left:10px" id="close-update">Cancel</button>
         </form>
       </div>
       </div>

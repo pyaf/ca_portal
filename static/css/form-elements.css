@@ -88,28 +88,3 @@ button.btn:active:focus, button.btn.active:focus { outline: 0; opacity: 0.6; bac
     border: none;
 }
 
-.close-email-btn
-{
-    float:right;
-}
-
-
-
-.alert-message
-{
-    color: #8a6d3b;
-    background-color: #ffc6c6;
-    border-color: #faebcc;
-        padding: 15px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
-    border-radius: 4px;
-}
-.close-btn
-{
-    float: right;
-    opacity: 1;
-    border: none;
-    background-color: #ffc6c6;
-}
-

@@ -1,4 +1,4 @@
-   
+
 
 
 
@@ -7,12 +7,12 @@
 /*              function checkform(pform)
 {
 
-    
+
    next_step = true;
    $(this).find('input[type="text"], input[type="password"], textarea').each(function() {
     console.log("l,sl,s,l");
                 if( $(this).val() == "" ) {
-                    
+
                     console.log("klkaklakl");
                     $(this).addClass('input-error');
                       next_step =false;
@@ -41,7 +41,7 @@
 */
 
 jQuery(document).ready(function() {
-    
+
     $(".alert-email").hide();
     $(".alert-confirm-password").hide();
     $(".alert-mobile").hide();
@@ -55,7 +55,7 @@ jQuery(document).ready(function() {
     });
      $('#close-mobile').on('click',function(){
       $('.alert-mobile').hide();
-    }); 
+    });
      $('#close-whatsapp').on('click',function(){
       $('.alert-whatsapp').hide();
     });
@@ -69,14 +69,14 @@ jQuery(document).ready(function() {
     */
    /* var FillWhatsapp  = function(f){
                                           $('.form-whatsapp').val($('.form-mobile-number').val()) ;
-                                        
-                                              
+
+
                                                 }
-    */ 
+    */
     //var password = document.getElementById("password")
       //, confirm_password = document.getElementById("confirm_password");
 
-    
+
     //password.onchange= validatePassword;
     //confirm_password.onkeyup= validatePassword;
 
@@ -87,7 +87,7 @@ function phnvalidation()
 
         console.log(num.length);
         if((num.length!==10) || (isNaN(parseInt(num))) || (parseInt(num).toString().length  != num.length))
-           { 
+           {
             $('.alert-mobile').show();
            // document.getElementById("form-mobile").setCustomValidity("Invalid Phone no");
             // console.log("here");
@@ -109,7 +109,7 @@ function phnvalidation()
 
         console.log(num.length);
         if((num.length!==6) || (isNaN(parseInt(num))) || (parseInt(num).toString().length != num.length))
-           { 
+           {
             //document.getElementById("form-mobile").setCustomValidity("Invalid Phone no");
             console.log("here");
             $('.alert-pincode').show();
@@ -131,7 +131,7 @@ function phnvalidation()
 
         console.log(num.length);
         if((num.length!==10) || (isNaN(parseInt(num))) || (parseInt(num).toString().length != num.length))
-           { 
+           {
             // document.getElementById("form-mobile").setCustomValidity("Invalid Phone no");
             console.log("here");
             //$("#whatsapp-error").html("Invalid Whatsapp No");
@@ -155,8 +155,8 @@ function phnvalidation()
         var email = $('.form-email').val();
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         console.log(email);
-       
-        if(re.test(email) == false)
+
+        if(re.test(email) == false || email.length > 30)
         {
              console.log("here")
              $('.alert-email').show();
@@ -166,13 +166,13 @@ function phnvalidation()
              return false;
         }
         else
-        { 
+        {
               //   document.getElementById("laluram").setCustomValidity("");
               //$("#email-error").html("");
               $(".alert-email").hide();
               return true;
         }
-        
+
     }
 
 function validatePassword(){
@@ -208,32 +208,32 @@ function validatePassword(){
          {
             $('.form-whatsapp').val('');
          }
-    });                                       
+    });
     $.backstretch("assets/img/backgrounds/1.jpg");
-    
+
     $('#top-navbar-1').on('shown.bs.collapse', function(){
         $.backstretch("resize");
     });
     $('#top-navbar-1').on('hidden.bs.collapse', function(){
         $.backstretch("resize");
     });
-    
+
     /*
         Form
     */
     $('.registration-form fieldset:first-child').fadeIn('slow');
-    
+
     $('.registration-form input[type="text"], .registration-form input[type="password"], .registration-form textarea, .registration-form select').on('focus', function() {
         $(this).removeClass('input-error');
     });
-    
+
     // next step
     //var k=0;
     $('#btn-next').on('click', function() {
       // k=1;
         var parent_fieldset = $(this).parents('fieldset');
         var next_step = true;
-        
+
         parent_fieldset.find('input[type="text"], input[type="password"], textarea').each(function() {
             if( $(this).val() == "" ) {
                 $(this).addClass('input-error');
@@ -248,29 +248,29 @@ function validatePassword(){
             console.log(next_step);
             //console.log(next_step, validatePassword(), emailvalidation());
         }
-        
+
         if( next_step ) {
 
             parent_fieldset.fadeOut(400, function() {
                 $(this).next().fadeIn();
                 $($(this).next()).find('input[type="text"], input[type="password"], textarea').each(function()
                 {
-                $(this).removeClass('input-error');   
+                $(this).removeClass('input-error');
                });
 
             });
             //document.getElementById("form-mobile").setCustomValidity("iNPUT A VALID PHN NO");
         }
-        
+
     });
-    
+
     // previous step
     $('.registration-form .btn-previous').on('click', function() {
         $(this).parents('fieldset').fadeOut(400, function() {
             $(this).prev().fadeIn();
         });
     });
-    
+
     // submit
 
 
@@ -287,13 +287,13 @@ function validatePassword(){
            if(next_step)
            {
             next_step = phnvalidation();
-           }     
+           }
            if(next_step){
             return true;
             }
             else
             {
-                
+
             }
     });
    */
@@ -360,7 +360,7 @@ $('#laluram').keyup(function(e){
         if(code !==13)
           $('.alert-email').hide();
         //document.getElementById("laluram").setCustomValidity("");
-        //$("#email-error").html(""); 
+        //$("#email-error").html("");
 
     });
 $('#confirm_password').keyup(function(e){
@@ -370,7 +370,7 @@ $('#confirm_password').keyup(function(e){
           $('.alert-confirm-password').hide();
         }
        // document.getElementById("confirm_password").setCustomValidity("");
-    //   $("#confirm-password-error").html(""); 
+    //   $("#confirm-password-error").html("");
 
     });
 $('#form-whatsapp').keyup(function(e){
@@ -378,7 +378,7 @@ $('#form-whatsapp').keyup(function(e){
         if(code !==13)
           $('.alert-whatsapp').hide();
         //document.getElementById("form-whatsapp").setCustomValidity("");
-        //$("#whatsapp-error").html(""); 
+        //$("#whatsapp-error").html("");
 
     });
 $('#form-pincode').keyup(function(e){
@@ -386,7 +386,7 @@ $('#form-pincode').keyup(function(e){
         if(code !==13)
           $('.alert-pincode').hide();
         //document.getElementById("form-pincode").setCustomValidity("");
-        //$("#pincode-error").html(""); 
+        //$("#pincode-error").html("");
 
     });
 
@@ -413,8 +413,8 @@ $('#form-pincode').keyup(function(e){
             else
                 {
                     $("#id_year").removeClass('input-error');
-                }   
-        
+                }
+
         parent_fieldset.find('input[type="text"], input[type="password"], textarea').each(function() {
             if( $(this).val() == "" ) {
                 $(this).addClass('input-error');
@@ -428,7 +428,7 @@ $('#form-pincode').keyup(function(e){
                 var wp=wpvalidation();
                 var pi=pinvalidation();
                 next_step = ((mb && wp) && pi);
-               } 
+               }
 
          if( next_step ) {
 
@@ -436,13 +436,13 @@ $('#form-pincode').keyup(function(e){
                 $(this).next().fadeIn();
                 $($(this).next()).find('input[type="text"], input[type="password"], textarea').each(function()
                 {
-                $(this).removeClass('input-error');   
+                $(this).removeClass('input-error');
                });
 
             });
             //document.getElementById("form-mobile").setCustomValidity("iNPUT A VALID PHN NO");
         }
-        
+
     });
 
 
@@ -476,7 +476,7 @@ $('#form-pincode').keyup(function(e){
         // {
         //     $('#form-first-name').setCustomValidity("Field Cannot be left Empty");
         //     e.preventDefault();
-        // }var next = true;        
+        // }var next = true;
             console.log("ancd");
             $(this).find('input[type="text"], input[type="password"], textarea').each(function() {
                 if( $(this).val() == "") {
@@ -512,7 +512,7 @@ $('#form-pincode').keyup(function(e){
   //     // k=1;
   //       var parent_fieldset = $(this).parents('fieldset');
   //       var next_step = true;
-        
+
   //       parent_fieldset.find('input[type="text"], input[type="password"], textarea').each(function() {
   //           if( $(this).val() == "" ) {
   //               $(this).addClass('input-error');
@@ -526,20 +526,20 @@ $('#form-pincode').keyup(function(e){
   //           console.log(next_step);
   //           //console.log(next_step, validatePassword(), emailvalidation());
   //       }
-        
+
   //       if( next_step ) {
 
   //           parent_fieldset.fadeOut(400, function() {
   //               $(this).next().fadeIn();
   //               $($(this).next()).find('input[type="text"], input[type="password"], textarea').each(function()
   //               {
-  //               $(this).removeClass('input-error');   
+  //               $(this).removeClass('input-error');
   //               });
 
   //           });
   //           //document.getElementById("form-mobile").setCustomValidity("iNPUT A VALID PHN NO");
   //       }
-        
+
     // });
 
 

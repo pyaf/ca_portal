@@ -1,5 +1,5 @@
 from django.shortcuts import render, render_to_response, HttpResponse, redirect
-from django.http import Http404,JsonResponse
+from django.http import Http404,JsonResponse,HttpResponseBadRequest
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views import generic
 from django.views.generic.list import ListView
@@ -12,17 +12,15 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 import requests, json, facebook, re
-
+from ca.forms import *
 from ca.models import *
 from task.models import *
-from notice.models import *
-from ca.forms import *
 from task.forms import *
+from notice.models import *
 from ca.backend import PasswordlessAuthBackend
 from task.views import send_email
 
-server = "http://www.ca.technex.in/"
-
+server = "http://ca.technex.in/"
 def context_call(request):
     # college = request.user.caprofile.college
     # ca_college_profile = CAProfile.objects.filter(college=college) #for showing other CAs of one's college.
@@ -33,7 +31,7 @@ def context_call(request):
         ca = request.user.caprofile
     except:
         ca = None
-    taskInstances = TaskInstance.objects.filter(ca = ca)
+    # taskInstances = TaskInstance.objects.filter(ca = ca)
     try:
         dd = DirectorDetail.objects.get(ca=ca)
         ddData = dd.directorDetail
@@ -44,12 +42,29 @@ def context_call(request):
         sbdData = sbd.studentBodyDetail
     except:
         sbdData = None
+    unread_user_msgs = ca.usernotification_set.order_by('-creation_time').filter(mark_read=False)
+    # read_user_msgs = ca.usernotification_set.order_by('-creation_time').filter(mark_read=True)
+    unread_count = unread_user_msgs.count()
+
+    # if unread_count >= 5:
+    #     unread_user_msgs = unread_user_msgs[:5]
+    #     read_user_msgs = None
+    #
+    # if unread_count<5:
+    #     read_user_msgs = read_user_msgs[:5-unread_count]
+    #     unread_user_msgs = unread_user_msgs[:unread_count]
+
     context = {
             # 'technexuser_college_count' : TechProfile.objects.filter(college=college).count(),
             'caprofile' : ca,
-            'user_msgs': ca.usernotification_set.filter(mark_read=False),
-            'all_user_msgs': ca.usernotification_set.all(),
-            'taskInstances' : taskInstances,
+            'unread_count':unread_count,
+            # 'unread_user_msgs': unread_user_msgs,
+            # 'read_user_msgs': read_user_msgs,
+            'all_user_msgs': ca.usernotification_set.order_by('-creation_time').all(),
+            # 'taskInstances' : taskInstances,
+            'dd' : TaskInstance.objects.get(task__taskName = 'Director Contact Details', ca = ca),
+            'sbd' : TaskInstance.objects.get(task__taskName = 'Student Body Head Details', ca = ca),
+            'fb' : TaskInstance.objects.get(task__taskName = 'Facebook Connect', ca = ca),
             'ddform':DirectorDetailForm(initial={'directorDetail':ddData}),
             'sbdform':StudentBodyDetailForm(initial={'studentBodyDetail' : sbdData}),
 
@@ -86,6 +101,23 @@ def SheetUpdate(caprofile):
     url = 'https://script.google.com/macros/s/AKfycbzEw71pbzcam4W2Jh9-bExZU7Ocv_fBULgmZBf7rMSxwdrHYY0/exec'
     requests.post(url,data=dic)
 
+def formValidation(**kwargs):
+    name = kwargs.get('name')
+    email = kwargs.get('email')
+    mobileNumber = kwargs.get('mobileNumber')
+    whatsappNumber = kwargs.get('whatsappNumber')
+    postalAddress = kwargs.get('postalAddress')
+    pinCode = kwargs.get('pinCode')
+    whyChooseYou = kwargs.get('whyChooseYou')
+    pastExp = kwargs.get('pastExp')
+    try:
+        if type(int(mobileNumber)) == int and type(int(whatsappNumber)) == int and type(int(pinCode)) == int:
+            pass
+        else:
+            pass
+    except:
+        pass
+
 class IndexView(generic.View):
     def get(self, request):
         # template_name = 'ca/index.html'
@@ -94,6 +126,9 @@ class IndexView(generic.View):
         return redirect('http://technex.in/ca')
 
 def LoginView(request):
+    if request.user.is_authenticated():
+        return redirect('/dashboard')
+
     template_name = 'ca/login.html'
     if request.method == "POST":
         post = request.POST
@@ -103,9 +138,12 @@ def LoginView(request):
         if user is not None:
 
             if user.is_active:
-                login(request,user)
-                return redirect('/dashboard')
-
+                if user.caprofile.isChoosen:
+                    login(request,user)
+                    return redirect('/dashboard')
+                else:
+                    messages.warning(request,"You can login only when you are selected for CA by Technex'17 Team!")
+                    return redirect('/login')
             else:
                 messages.warning(request, "Please Confirm your email before logging in, for email confirmation check your email.", fail_silently=True)
                 return redirect('/login')
@@ -116,7 +154,11 @@ def LoginView(request):
         return render(request,template_name,{})
 
 
+
 def CARegistrationView(request):
+    if request.user.is_authenticated():
+        return redirect('/dashboard')
+
     template_name = 'ca/register.html'
     context = {
             'all_colleges':College.objects.all(),
@@ -216,19 +258,21 @@ def confirmEmail(request,confirmationKey):
                 user = PasswordlessAuthBackend().authenticate(username=caprofile.user.email)
                 user.backend = 'ca.backend.PasswordlessAuthBackend'
                 login(request,user)
-                return redirect('/dashboard')
+                return render(request,'ca/thanks.html',{})
             except Exception as e:
                 return HttpResponse(e)
         except:
             raise Http404('Not allowed')
 
-def FbLogin(request):
-    pass
 
 @login_required(login_url='/login')
 def DashboardView(request):
-    template_name = 'ca/dashboard.html'
     ca = request.user.caprofile
+    if not ca.isChoosen:
+        return HttpResponseBadRequest('<h1>Not Allowed</h1>')
+
+    template_name = 'ca/dashboard.html'
+
     try:
         context = context_call(request)
         if ca.firstVisit == False: #Visiting first time, let him explore the dashboard
@@ -243,8 +287,11 @@ def DashboardView(request):
 
 @login_required(login_url = "/login")
 def AccountDetailView(request):
-    template_name = 'ca/settings.html'
     ca = request.user.caprofile
+    if not ca.isChoosen:
+        raise Http404('Not Allowed')
+
+    template_name = 'ca/settings.html'
     context = context_call(request)
     data = {
         'name': request.user.first_name,
@@ -273,6 +320,27 @@ def AccountDetailView(request):
             messages.warning(request,'Invalid input!',fail_silently=True)
 
 
+    return render(request, template_name, context)
+
+
+@login_required(login_url = '/login')
+def LeaderboardView(request):
+    template_name = 'ca/leaderboard.html'
+
+    for lb in LeaderBoard.objects.all():
+        points = 0
+        for ti in lb.ca.taskinstance_set.all():
+            points += ti.status
+
+        '''
+        API Call
+        '''
+        lb.points = points
+        lb.save()
+
+    context = {
+        'leaderboard' : LeaderBoard.objects.order_by('-points').all()
+        }
     return render(request, template_name, context)
 
 
@@ -315,3 +383,21 @@ def PasswordChangeView(request):
 def LogoutView(request):
     logout(request)
     return redirect('/')
+
+
+#http://ca.technex.in/8727612845746360924/
+@csrf_exempt
+def ApiReferralView(request):
+    response_data = {}
+    # data =json.loads(request.body)
+    data = request.POST
+    email = data.get("email")
+    try:
+        user = User.objects.get(username=email, email=email)
+        ca = CAProfile.objects.get(user=user)
+        response_data['status'] = 1
+    except Exception as e:
+        response_data['status'] = 0
+
+
+    return JsonResponse(response_data)

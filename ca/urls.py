@@ -14,21 +14,22 @@ urlpatterns = [
 
 	url(r'^register/$', CARegistrationView, name= 'register' ),
 
-	url(r'^confirmEmail/(?P<confirmationKey>[\w\-]+)/$', confirmEmail, name='confirmEmail'),
-
 	# url(r'^fblogin/$', FbLogin, name= 'fblogin' ),
 
+	url(r'^confirmEmail/(?P<confirmationKey>[\w\-]+)/$', confirmEmail, name='confirmEmail'),
 	#dashboard
 	url(r'^dashboard/$', DashboardView, name= 'dashboard' ),
-
+	#
 	url(r'^logout/$', LogoutView, name='name'),
-
+	#
 	url(r'^settings/$', AccountDetailView, name='settings'),
-
+	#
 	url(r'^passwordChange/$', PasswordChangeView, name='passwordChange'),
 
-	url(r'^logout/$', LogoutView, name='logout'),
 
+	url(r'^leaderboard/$', LeaderboardView, name='leaderboard'),
+
+	url(r'^8727612845746360924/$', ApiReferralView)
 
 ]
 

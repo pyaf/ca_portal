@@ -14,7 +14,7 @@ jQuery(document).ready(function() {
 
 $(".sign-up-btn").click(function(e){
          e.preventDefault();
-         window.location = "/register";    
+         window.location = "file:///C:/Users/ISHANT/Desktop/login2.html";    
 });
  $('.reset-password-form input[type="text"], .password-form input[type="password"]').on('focus', function() {
         $(this).removeClass('input-error');

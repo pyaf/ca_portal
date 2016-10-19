@@ -20,112 +20,100 @@ from ca.models import *
 from task.models import *
 from task.forms import *
 
-
-server = "http://www.ca.technex.in/"
-
-def send_email(recipient, subject, body):
-
-    return requests.post(
-        "https://api.mailgun.net/v3/mg.technex.in/messages",
-        auth=("api", "key-cf7f06e72c36031b0097128c90ee896a"),
-        data={"from": "No-reply <mailgun@mg.technex.in>",
-              "to": recipient,
-              "subject": subject,
-              "text": body})
-
+server = 'http://ca.technex.in/'
 @csrf_exempt
 def submitDirectorDetail(request):
-    response = {}
-    if request.method == 'POST':
-        post = request.POST
-        form = DirectorDetailForm(post)
-        dd = post.get('directorDetail')
-        try:
-            directorDetail = DirectorDetail.objects.get(ca = request.user.caprofile)
-            directorDetail.directorDetail = dd
-        except:
-            directorDetail = DirectorDetail(ca = request.user.caprofile, directorDetail = dd)
-        taskInstance = TaskInstance.objects.get(task__taskName = 'Director Contact Details', ca = request.user.caprofile)
+	response = {}
+	if request.method == 'POST':
+		post = request.POST
+		form = DirectorDetailForm(post)
+		dd = post.get('directorDetail')
+		try:
+			directorDetail = DirectorDetail.objects.get(ca = request.user.caprofile)
+			directorDetail.directorDetail = dd
+		except:
+			directorDetail = DirectorDetail(ca = request.user.caprofile, directorDetail = dd)
+		taskInstance = TaskInstance.objects.get(task__taskName = 'Director Contact Details', ca = request.user.caprofile)
 
-        if dd == '':
-            taskInstance.status = 0
-        else:
-            taskInstance.status = 100
+		if dd == '':
+			taskInstance.status = 0
+		else:
+			taskInstance.status = 10
 
-        directorDetail.save()
-        taskInstance.save()
-        response['status'] = 'OK'
-    else:
-        response['status'] = 'Invalid request'
-    return JsonResponse(response)
+		directorDetail.save()
+		taskInstance.save()
+		response['status'] = 'OK'
+	else:
+		response['status'] = 'Invalid request'
+	return JsonResponse(response)
 
 
 @csrf_exempt
 def submitStudentBodyDetail(request):
-    response = {}
-    if request.method == 'POST':
-        post = request.POST
-        form = StudentBodyDetailForm(post)
-        ca = request.user.caprofile
-        sbd = post.get('studentBodyDetail')
-        try:
-            studentBodyDetail = StudentBodyDetail.objects.get(ca = ca)
-            studentBodyDetail.studentBodyDetail = sbd
-        except:
-            studentBodyDetail = StudentBodyDetail(ca = ca, studentBodyDetail = sbd)
-        taskInstance = TaskInstance.objects.get(task__taskName = 'Student Body Head Details', ca = ca)
+	response = {}
+	if request.method == 'POST':
+		post = request.POST
+		form = StudentBodyDetailForm(post)
+		ca = request.user.caprofile
+		sbd = post.get('studentBodyDetail')
+		try:
+			studentBodyDetail = StudentBodyDetail.objects.get(ca = ca)
+			studentBodyDetail.studentBodyDetail = sbd
+		except:
+			studentBodyDetail = StudentBodyDetail(ca = ca, studentBodyDetail = sbd)
+		taskInstance = TaskInstance.objects.get(task__taskName = 'Student Body Head Details', ca = ca)
 
-        if sbd == '':
-            taskInstance.status = 0
-        else:
-            taskInstance.status = 100
+		if sbd == '':
+			taskInstance.status = 0
+		else:
+			taskInstance.status = 10
 
-        studentBodyDetail.save()
-        taskInstance.save()
-        response['status'] = 'OK'
+		studentBodyDetail.save()
+		taskInstance.save()
+		response['status'] = 'OK'
 
-    else:
-        response['status'] = 'Invalid request'
-    return JsonResponse(response)
+	else:
+		response['status'] = 'Invalid request'
+	return JsonResponse(response)
 
-@login_required(login_url = "/login")
-def AllPosterView(request):
-    template_name = 'ca/all_posters.html'
-    context = context_call(request)
-    return render(request,template_name, context)
+# @login_required(login_url = "/login")
+# def AllPosterView(request):
+#     template_name = 'ca/all_posters.html'
+#     context = context_call(request)
+#     return render(request,template_name, context)
+#
+# @login_required(login_url = "/login")
+# def ToDoListView(request):
+#     template_name = 'ca/to_do_list.html'
+#     context = context_call(request)
+#     return render(request,template_name,context)
+#
+#
+# @login_required(login_url='/login')
+# def UpcomingEventsView(request):
+#     template_name = 'ca/upcoming_events.html'
+#     context = context_call(request)
+#
+#     return render(request,template_name,context)
 
-@login_required(login_url = "/login")
-def ToDoListView(request):
-    template_name = 'ca/to_do_list.html'
-    context = context_call(request)
-    return render(request,template_name,context)
 
-
-@login_required(login_url='/login')
-def UpcomingEventsView(request):
-    template_name = 'ca/upcoming_events.html'
-    context = context_call(request)
-
-    return render(request,template_name,context)
-
-
-@login_required(login_url = "/login")
-def PosterUploadView(request):
-    template_name = 'ca/poster_form.html'
-    context = context_call(request)
-
-    if request.method == 'POST':
-        form = ImageUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            img = form.save(commit=False)
-            img.user = request.user
-            img.save()
-            messages.success(request, 'Poster uploaded successfully.',fail_silently=True)
-            return redirect('/ca/dashboard/')
-        else:
-            return render(request,template_name,context)
-    else:
-        return render(request,template_name,context)
+# @login_required(login_url = "/login")
+# def PosterUploadView(request):
+#     template_name = 'ca/poster_form.html'
+#     context = context_call(request)
+#
+#     if request.method == 'POST':
+#         form = ImageUploadForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             img = form.save(commit=False)
+#             img.user = request.user
+#             img.save()
+#             messages.success(request, 'Poster uploaded successfully.',fail_silently=True)
+#             return redirect('/ca/dashboard/')
+#         else:
+#             return render(request,template_name,context)
+#     else:
+#         return render(request,template_name,context)
 
 
 '''
@@ -218,10 +206,21 @@ def fbConnect(request):
             fb_connect = FbConnect(ca = request.user.caprofile, accessToken = post['accessToken'], uid = post['uid'])
             response['status'] = 'connected'
         fb_connect.save()
-        taskInstance = TaskInstance.objects.get(task__taskName = 'Facebook connect', ca = request.user.caprofile)
+        taskInstance = TaskInstance.objects.get(task__taskName = 'Facebook Connect', ca = request.user.caprofile)
         taskInstance.status = 100
         taskInstance.save()
         return JsonResponse(response)
+
+
+def send_email(recipient, subject, body):
+
+    return requests.post(
+        "https://api.mailgun.net/v3/mg.technex.in/messages",
+        auth=("api", "key-cf7f06e72c36031b0097128c90ee896a"),
+        data={"from": "No-reply <no-reply@technex.in>",
+              "to": recipient,
+              "subject": subject,
+              "text": body})
 
 
 @csrf_exempt
@@ -235,7 +234,7 @@ def forgotPassword(request):
                 messages.warning(request,"Please confirm your email first!")
                 return redirect('/login')
         except:
-            messages.warning(request,"Invalid Email!")
+            messages.warning(request,"Email not registered")
             return redirect('/login')
 
         subject = "Reset Password"
@@ -260,10 +259,10 @@ def forgotPassword(request):
             messages.warning(request, "Email couldn't  be send, Retry please!")
     else:
 		raise Http404('NOT ALLOWED')
+
 @csrf_exempt
 def resetPass(request,forgotPassKey):
     if request.method == 'GET':
-
         try:
             key = Key.objects.get(forgotPassKey = int(forgotPassKey))
             return render(request,"ca/reset.html")
