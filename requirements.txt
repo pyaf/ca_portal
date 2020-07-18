@@ -1,5 +1,5 @@
 dj-database-url==0.4.1
-Django==1.9.8
+Django==1.11.29
 facebook-sdk==2.0.0
 gdata==2.0.18
 google-api-python-client==1.5.3
