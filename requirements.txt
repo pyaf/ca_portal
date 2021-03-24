@@ -16,7 +16,7 @@ python-http-client==1.2.3
 python-openid==2.2.5
 requests==2.11.0
 requests-oauthlib==0.6.2
-rsa==3.4.2
+rsa==4.1
 simplejson==3.8.2
 six==1.10.0
 smtpapi==0.3.1
